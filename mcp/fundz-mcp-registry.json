@@ -1,0 +1,47 @@
+{
+  "servers": [
+    {
+      "server": {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+        "name": "io.github.Fund-z/fundzwatch",
+        "description": "Business-event intelligence for AI agents: funding, exec moves, UCC and benefit-plan signals.",
+        "repository": {
+          "url": "https://github.com/Fund-z/fundzwatch-mcp",
+          "source": "github"
+        },
+        "version": "1.2.2",
+        "websiteUrl": "https://fundzwatch.ai",
+        "packages": [
+          {
+            "registryType": "npm",
+            "registryBaseUrl": "https://registry.npmjs.org",
+            "identifier": "@fundzwatch/mcp-server",
+            "version": "1.2.2",
+            "transport": {
+              "type": "stdio"
+            },
+            "environmentVariables": [
+              {
+                "description": "FundzWatch API key (optional \u2014 7 tools work without it). Free key at https://fundzwatch.ai/onboarding",
+                "isSecret": true,
+                "name": "FUNDZWATCH_API_KEY"
+              }
+            ]
+          }
+        ]
+      },
+      "_meta": {
+        "io.modelcontextprotocol.registry/official": {
+          "status": "active",
+          "statusChangedAt": "2026-06-06T19:03:59.996644Z",
+          "publishedAt": "2026-06-06T19:03:59.996644Z",
+          "updatedAt": "2026-06-06T19:03:59.996644Z",
+          "isLatest": true
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "count": 1
+  }
+}

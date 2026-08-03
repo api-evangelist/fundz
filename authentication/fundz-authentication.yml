@@ -1,0 +1,24 @@
+generated: '2026-08-03'
+method: searched
+status: published
+source: https://app.fundz.net/knowledge/api-references/companies
+description: API key passed in the Authorization header. A free key is issued instantly,
+  with no card and no sales call.
+verified: '2026-08-03'
+schemes:
+- id: ApiKey
+  type: apiKey
+  in: header
+  name: Authorization
+  example: 'curl -H "Authorization: YOUR_API_KEY" https://api.fundz.net/companies/onelayer'
+trial:
+  url: https://fundz.net/api-trial
+  instant: true
+  card_required: false
+  note: Free instant key — the differentiator the founder leads with against Crunchbase,
+    whose Basic API was retired.
+evidence:
+- url: https://fundz.net/api-trial
+  status: 200
+- url: https://app.fundz.net/knowledge/api-references/companies
+  status: 200

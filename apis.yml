@@ -1,0 +1,125 @@
+aid: fundz
+url: https://raw.githubusercontent.com/api-evangelist/fundz/refs/heads/main/apis.yml
+name: Fundz
+description: 'Fundz is an event-first business intelligence platform, founded 2015, tracking 200,000+
+  companies and surfacing funding rounds, executive changes, M&A activity, SEC filings (8-K, 10-K, 10-Q,
+  Form D) and website modifications in real time. Rather than storing millions of static records it focuses
+  on companies showing active signals, and scores them against each user''s criteria. The API exposes
+  company profiles, fundings, SEC filings and fund formations from api.fundz.net with an API key in the
+  Authorization header. It sits in the same category as Harmonic and Crunchbase, and competes explicitly
+  on access: an API key is free and issued instantly with no card and no sales call, and pricing is published
+  rather than quoted. Fundz also ships an MCP server listed on the official Model Context Protocol registry,
+  and publishes an llms.txt.'
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fundz.png
+created: '2026-08-03'
+modified: '2026-08-03'
+specificationVersion: '0.21'
+type: Index
+position: Producing
+access: 3rd-Party
+kind: contract
+tags:
+- Business Intelligence
+- Funding
+- Private Markets
+- Mergers And Acquisitions
+- SEC Filings
+- Signals
+- Sales Intelligence
+- MCP
+- Agents
+apis:
+- aid: fundz:fundz-api
+  name: Fundz API
+  description: Company profiles, funding rounds, SEC filings and fund formations, keyed to real-time business
+    events.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Funding
+  - Companies
+  - SEC Filings
+  - Fund Formations
+  - Signals
+  properties:
+  - url: https://www.fundz.net/fundz-api
+    type: Documentation
+  - url: https://app.fundz.net/knowledge/api-references/companies
+    type: APIReference
+  - url: https://fundz.net/api-trial
+    type: Signup
+  - url: https://fundz.net/pricing
+    type: Pricing
+  - url: authentication/fundz-authentication.yml
+    type: Authentication
+  - url: plans/fundz-plans.yml
+    type: Plans
+  - url: mcp/fundz-mcp.yml
+    type: MCPServer
+  - url: https://app.fundz.net/llms.txt
+    type: LlmsText
+common:
+- url: https://www.fundz.net/
+  type: Website
+- url: https://www.fundz.net/fundz-api
+  type: Documentation
+- url: https://fundz.net/pricing
+  type: Pricing
+- url: https://fundz.net/api-trial
+  type: Signup
+- url: https://app.fundz.net/llms.txt
+  type: LlmsText
+- url: mcp/fundz-mcp.yml
+  type: MCPServer
+- url: plans/fundz-plans.yml
+  type: Plans
+- url: authentication/fundz-authentication.yml
+  type: Authentication
+- url: https://github.com/Fund-z/fundzwatch-mcp
+  type: GitHubRepository
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+X-Discovery:
+  date: '2026-08-03'
+  method: probed
+  note: Founder John Dukes wrote in asking to be documented alongside Harmonic. Every claim in that email
+    was checked against the live surface before this profile was written.
+  findings:
+  - surface: MCPServer
+    url: https://registry.modelcontextprotocol.io/v0/servers?search=fundz
+    http_status: 200
+    real: true
+    note: Claim confirmed — io.github.Fund-z/fundzwatch v1.2.2 is on the OFFICIAL MCP registry, npm @fundzwatch/mcp-server,
+      stdio.
+  - surface: LlmsTxt
+    url: https://app.fundz.net/llms.txt
+    http_status: 200
+    real: true
+  - surface: Signup
+    url: https://fundz.net/api-trial
+    http_status: 200
+    real: true
+    note: Free instant key claim — page exists as described.
+  - surface: Pricing
+    url: https://fundz.net/pricing
+    http_status: 200
+    real: true
+  - surface: APIReference
+    url: https://app.fundz.net/knowledge/api-references/companies
+    http_status: 200
+    real: true
+    note: Base URL api.fundz.net and Authorization-header auth read from here.
+  - surface: OpenAPI
+    url: https://api.fundz.net/openapi.json
+    http_status: 404
+    real: false
+    note: CLAIM NOT CONFIRMED. The founder states "we publish an OpenAPI spec"; none was discoverable.
+      404 on /openapi.json, /openapi.yaml, /swagger.json, /api-docs, /docs, /redoc, /spec, /v1/openapi.json
+      and /.well-known/openapi.json at api.fundz.net, on app.fundz.net, and in the fundzwatch-mcp repository.
+      No spec was modelled on their behalf — the gap is recorded instead.
+  - surface: WellKnown
+    url: https://fundz.net/.well-known/api-catalog
+    http_status: 404
+    real: false

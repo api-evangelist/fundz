@@ -1,0 +1,15 @@
+generated: '2026-08-03'
+method: searched
+status: published
+source: https://fundz.net/pricing
+description: Pricing is published on the site rather than quoted, and an API trial
+  key is free and instant.
+verified: '2026-08-03'
+evidence:
+- url: https://fundz.net/pricing
+  status: 200
+- url: https://fundz.net/api-trial
+  status: 200
+gaps:
+- Individual tier names and prices were not parsed from the page; recorded as published
+  rather than enumerated.
