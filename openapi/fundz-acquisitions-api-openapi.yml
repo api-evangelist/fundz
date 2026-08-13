@@ -1,0 +1,449 @@
+openapi: 3.2.0
+info:
+  title: Fundz Acquisitions API
+  version: 1.1.0
+  description: 'The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.
+
+
+    **Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.
+
+
+    **Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.
+
+
+    **Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.
+
+
+    **Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.
+
+
+    **Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.
+
+
+    **Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).'
+  contact:
+    name: Fundz API Support
+    email: john@fundz.net
+    url: https://app.fundz.net/fundz-api
+  license:
+    name: Fundz API Terms of Service
+    url: https://www.fundz.net/terms
+  termsOfService: https://www.fundz.net/terms
+servers:
+- url: https://api.fundz.net
+  description: Production API server
+security:
+- apiKey: []
+tags:
+- name: Acquisitions
+  description: Company acquisitions and M&A events, with acquirer and target organization records where disclosed.
+paths:
+  /acquisitions:
+    get:
+      summary: Retrieve acquisitions
+      tags:
+      - Acquisitions
+      description: Monitor mergers and acquisitions activity across markets. Track which companies are being acquired, who is buying them, and emerging M&A trends. Valuable for competitive intelligence, market analysis, and identifying consolidation patterns in specific industries.
+      security:
+      - apiKey: []
+      parameters:
+      - name: created_from
+        in: query
+        schema:
+          type: string
+        description: Only return events published on or after this date (YYYY-MM-DD), against `created_at`.
+        required: false
+        example: '2026-08-01'
+      - name: created_to
+        in: query
+        schema:
+          type: string
+        description: Only return events published on or before this date (YYYY-MM-DD), against `created_at`.
+        required: false
+        example: '2026-08-05'
+      - name: locations
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Locations titles and short_description filter
+        required: false
+        example:
+        - San Francisco
+      - name: industries
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Industry titles filter
+        required: false
+        example:
+        - Information Technology
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set.
+        required: false
+        example: 1
+      responses:
+        '200':
+          description: A page of acquisitions, newest first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcquisitionPage'
+              examples:
+                live_response:
+                  summary: Real production response captured 2026-08-05 (first 2 of 25 records)
+                  value:
+                    _attribution: Data provided by Fundz — https://fundz.net
+                    _licensing: Commercial use, redistribution or embedding requires a licence — john@fundz.net
+                    data:
+                    - acquirees:
+                      - id: trak-racer
+                        is_public_company: false
+                        list_badges: []
+                        name: Trak Racer
+                        number_of_employees: null
+                        status_code: recently_acquired
+                        status_label: RECENTLY ACQUIRED
+                        ticker: null
+                      acquirers:
+                      - id: corsair-gaming
+                        industries:
+                        - id: 52
+                          title: Gaming
+                        - id: 106
+                          title: Video Games
+                        is_public_company: true
+                        list_badges: []
+                        location:
+                          id: 4838
+                          country: United States
+                          short_description: Palo Alto, California, United States
+                          title: Palo Alto
+                        name: Corsair Gaming
+                        number_of_employees: null
+                        status_code: public
+                        status_label: PUBLIC
+                        ticker: CRSR
+                      created_at: '2026-08-05T13:10:17Z'
+                      id: acquires-4db5-260e5463-2a65-4f84-ba60-736380ee12dd
+                      title: Corsair Gaming acquires Trak Racer assets
+                    - acquirees:
+                      - id: stmicroelectronics-international-nv
+                        is_public_company: false
+                        list_badges: []
+                        name: ST
+                        number_of_employees: null
+                        status_code: private
+                        status_label: PRIVATE
+                        ticker: null
+                      acquirers:
+                      - id: charlton-aria-acquisition-corporation
+                        industries:
+                        - id: 39
+                          title: Artificial Intelligence
+                        is_public_company: false
+                        list_badges: []
+                        location:
+                          id: 4872
+                          country: United States
+                          short_description: Wilmington, Delaware, United States
+                          title: Wilmington
+                        name: CHARLTON ARIA ACQUISITION CORPORATION
+                        number_of_employees: null
+                        status_code: private
+                        status_label: PRIVATE
+                        ticker: null
+                      created_at: '2026-08-05T13:10:16Z'
+                      id: acquires-448b
+                      title: Charlton Aria Acquisition Corporation Announces Acquisition of ST
+                    meta:
+                      current_page: 1
+                      next_page: 2
+                      total_count: 34878
+                      total_pages: 1396
+                      tier: Pro
+                      remaining_searches: 45
+                    upgrade_url: https://www.fundz.net/pricing
+        '403':
+          description: Missing, invalid, orphaned or non-entitled API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                type: Unauthorized
+                message: Authentication required
+        '429':
+          description: Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              example:
+                error: rate_limit_exceeded
+                current_tier: Pro
+                queries_limit: 500
+                remaining_searches: 0
+                upgrade_url: https://www.fundz.net/pricing
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                type: NotFound
+                message: Not found
+        '500':
+          description: Unexpected server error.
+        default:
+          description: Unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: listAcquisitions
+components:
+  schemas:
+    RateLimitError:
+      type: object
+      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
+      properties:
+        error:
+          type: string
+          description: Always "rate_limit_exceeded".
+        current_tier:
+          type: string
+          description: The plan attached to your key.
+        queries_limit:
+          type: integer
+          description: Your daily request allowance.
+        remaining_searches:
+          type: integer
+          description: Always 0 in this response.
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise the limit.
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
+    Acquisition:
+      type: object
+      properties:
+        acquirees:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Stable slug identifier for this record. Safe to use as a deduplication key.
+              is_public_company:
+                type: boolean
+                description: True when the company is publicly traded.
+              list_badges:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    list_name:
+                      type: string
+                    list_year:
+                      type: integer
+                    rank:
+                      type:
+                      - string
+                      - 'null'
+                    label:
+                      type: string
+                  description: Badges applied to the company by Fundz curation lists.
+                description: Badges applied to the company by Fundz curation lists.
+              name:
+                type: string
+                description: Company name.
+              number_of_employees:
+                type:
+                - integer
+                - 'null'
+                description: Headcount, where known. Null when not disclosed.
+              status_code:
+                type: string
+                description: Company status, e.g. "private" or "public".
+              status_label:
+                type: string
+                description: Display form of status_code.
+              ticker:
+                type:
+                - string
+                - 'null'
+                description: Stock ticker for public companies. Null for private companies.
+        acquirers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Stable slug identifier for this record. Safe to use as a deduplication key.
+              industries:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Stable slug identifier for this record. Safe to use as a deduplication key.
+                    title:
+                      type: string
+                      description: Human-readable headline for the event.
+                  description: Industry classifications applied to the company.
+                description: Industry classifications applied to the company.
+              is_public_company:
+                type: boolean
+                description: True when the company is publicly traded.
+              list_badges:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    list_name:
+                      type: string
+                    list_year:
+                      type: integer
+                    rank:
+                      type:
+                      - string
+                      - 'null'
+                    label:
+                      type: string
+                  description: Badges applied to the company by Fundz curation lists.
+                description: Badges applied to the company by Fundz curation lists.
+              location:
+                type:
+                - object
+                - 'null'
+                properties:
+                  id:
+                    type: integer
+                    description: Stable slug identifier for this record. Safe to use as a deduplication key.
+                  country:
+                    type: string
+                    description: Country name.
+                  short_description:
+                    type: string
+                    description: Full location string, e.g. "San Francisco, California, United States".
+                  title:
+                    type: string
+                    description: Human-readable headline for the event.
+                description: Company headquarters location.
+              name:
+                type: string
+                description: Company name.
+              number_of_employees:
+                type:
+                - integer
+                - 'null'
+                description: Headcount, where known. Null when not disclosed.
+              status_code:
+                type: string
+                description: Company status, e.g. "private" or "public".
+              status_label:
+                type: string
+                description: Display form of status_code.
+              ticker:
+                type:
+                - string
+                - 'null'
+                description: Stock ticker for public companies. Null for private companies.
+        created_at:
+          type: string
+          format: date-time
+          description: When Fundz published the event, in UTC. This is the field to poll on for new events.
+        id:
+          type: string
+          description: Stable slug identifier for this record. Safe to use as a deduplication key.
+        title:
+          type: string
+          description: Human-readable headline for the event.
+      description: A single acquisition.
+    AcquisitionPage:
+      type: object
+      description: A page of acquisitions.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The acquisitions on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Acquisition'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    Meta:
+      type: object
+      description: Pagination and quota metadata returned with every list response.
+      properties:
+        current_page:
+          type: integer
+          description: The page you requested. Pages hold 25 records.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number, or null on the last page.
+        total_count:
+          type: integer
+          description: Total records matching the query across all pages.
+        total_pages:
+          type: integer
+          description: Total number of pages available.
+        tier:
+          type: string
+          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
+        remaining_searches:
+          type: integer
+          description: Requests left in your current quota window.
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'API key passed as the raw value of the `Authorization` header — **no `Bearer` prefix**.
+
+
+        ```
+
+        Authorization: YOUR_API_KEY
+
+        ```
+
+
+        Get a key instantly and self-serve at https://www.fundz.net/api-trial. Requests without a valid key return HTTP 403. Your remaining quota is reported on every successful response as `meta.remaining_searches`, and your plan as `meta.tier`.'
+externalDocs:
+  description: Fundz API documentation and self-serve key
+  url: https://app.fundz.net/fundz-api

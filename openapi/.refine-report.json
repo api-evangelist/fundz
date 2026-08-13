@@ -1,0 +1,24 @@
+{
+  "provider": "fundz",
+  "sources": [
+    "fundz-openapi.json"
+  ],
+  "outputs": [
+    "fundz-acquisitions-api-openapi.yml",
+    "fundz-agreements-api-openapi.yml",
+    "fundz-crowdfundings-api-openapi.yml",
+    "fundz-executives-api-openapi.yml",
+    "fundz-fundings-api-openapi.yml",
+    "fundz-products-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/fundz-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "fundz-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+6 apis, 7 total)"
+  ],
+  "skipped": []
+}

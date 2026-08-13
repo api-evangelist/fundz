@@ -1,0 +1,577 @@
+openapi: 3.2.0
+info:
+  title: Fundz Fundings API
+  version: 1.1.0
+  description: 'The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.
+
+
+    **Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.
+
+
+    **Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.
+
+
+    **Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.
+
+
+    **Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.
+
+
+    **Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.
+
+
+    **Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).'
+  contact:
+    name: Fundz API Support
+    email: john@fundz.net
+    url: https://app.fundz.net/fundz-api
+  license:
+    name: Fundz API Terms of Service
+    url: https://www.fundz.net/terms
+  termsOfService: https://www.fundz.net/terms
+servers:
+- url: https://api.fundz.net
+  description: Production API server
+security:
+- apiKey: []
+tags:
+- name: Fundings
+  description: Funding rounds — seed through late-stage venture and private equity — with the investors on the round and the full organization record.
+paths:
+  /fundings:
+    get:
+      summary: Retrieve funding rounds
+      tags:
+      - Fundings
+      description: Retrieve a feed of funding rounds, including seed rounds, Series A-F, venture capital, and private equity investments. Use this endpoint to track investment activity, discover newly funded companies, and analyze funding trends across different industries and locations.
+      security:
+      - apiKey: []
+      parameters:
+      - name: created_from
+        in: query
+        schema:
+          type: string
+        description: Only return events published on or after this date (YYYY-MM-DD), against `created_at`.
+        required: false
+        example: '2026-08-01'
+      - name: created_to
+        in: query
+        schema:
+          type: string
+        description: Only return events published on or before this date (YYYY-MM-DD), against `created_at`.
+        required: false
+        example: '2026-08-05'
+      - name: money_raised_min
+        in: query
+        schema:
+          type: integer
+        description: Minimum money raised
+        required: false
+        example: 1000000
+      - name: money_raised_max
+        in: query
+        schema:
+          type: integer
+        description: Maximum money raised
+        required: false
+        example: 50000000
+      - name: number_of_employees_min
+        in: query
+        schema:
+          type: integer
+        description: Minimum number of employees
+        required: false
+        example: 10
+      - name: number_of_employees_max
+        in: query
+        schema:
+          type: integer
+        description: Maximum number of employees
+        required: false
+        example: 500
+      - name: keywords
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Free-text search across the event title and the company description.
+        required: false
+        example:
+        - artificial intelligence
+      - name: series
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Funding series
+        required: false
+        example:
+        - Series A
+      - name: offered_types
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Offered types
+        required: false
+        example:
+        - Equity
+      - name: locations
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Locations titles and short_description filter
+        required: false
+        example:
+        - San Francisco
+      - name: industries
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Industry titles filter
+        required: false
+        example:
+        - Information Technology
+      - name: investors
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        description: Filter to rounds involving this investor, matched against the Fundz investor graph.
+        required: false
+        example:
+        - General Catalyst
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set.
+        required: false
+        example: 1
+      responses:
+        '200':
+          description: A page of funding rounds, newest first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FundingPage'
+              examples:
+                live_response:
+                  summary: Real production response captured 2026-08-05 (first 2 of 25 records)
+                  value:
+                    _attribution: Data provided by Fundz — https://fundz.net
+                    _licensing: Commercial use, redistribution or embedding requires a licence — john@fundz.net
+                    data:
+                    - created_at: '2026-08-05T13:26:01Z'
+                      id: briidge-inc-funding-round-70e9eb
+                      investors:
+                      - id: 55143
+                        title: Lumin Arx Capital Management
+                      money_raised: $500 Million
+                      organization:
+                        description: Bridge Industries, LLC, founded by Jeff Berlin in 2003 is a holding company based in Cleveland, OH. Bridge partners with operating management teams to help successful manufacturers/distributors of engineered products expand into new markets and execute strategic growth plans. bridgeind.com
+                        domain:
+                          id: 48235
+                          description: Free online bridge. Largest bridge site in the world. Duplicate, tournaments, money games, vugraph, more.
+                          logo: https://www.google.com/s2/favicons?domain=www.bridgebase.com&sz=128
+                          name: www.bridgebase.com
+                          url: https://www.bridgebase.com/
+                          website: https://www.bridgebase.com/
+                        founded: null
+                        id: briidge-inc
+                        industries: []
+                        is_public_company: false
+                        linkedin_url: null
+                        list_badges: []
+                        location:
+                          id: 4811
+                          country: United States
+                          short_description: Nashville, Arkansas, United States
+                          title: Nashville
+                        name: Briidge Inc.
+                        number_of_employees: 9
+                        status_code: private
+                        status_label: PRIVATE
+                        ticker: null
+                      series: Venture - Series Unknown
+                      source_url: https://www.finsmes.com/2026/08/bridge-received-500m-from-luminarx-capital-management.html
+                      title: Bridge received $500M from LuminArx Capital Management to enhance its AI-powered lending platform.
+                      use_of_proceeds: []
+                    - created_at: '2026-08-05T13:00:00Z'
+                      id: aurelius-systems-funding-round-series-a-a25b2e
+                      investors:
+                      - id: 51104
+                        title: Decisive Point
+                      - id: 12140
+                        title: Detroit Venture Partners
+                      - id: 74651
+                        title: Bravo Victor Venture Capital (Bvvc)
+                      - id: 339
+                        title: Alumni Ventures
+                      - id: 74650
+                        title: Outlander
+                      - id: 74649
+                        title: Hanwha Defense Usa
+                      - id: 4796
+                        title: General Catalyst
+                      - id: 71151
+                        title: Kas Venture Partners
+                      - id: 5385
+                        title: Draper Associates
+                      money_raised: $40 Million
+                      organization:
+                        description: Aurelius Systems is developing autonomous laser weapons to counter modern drone threats. Based in San Francisco, the company fuses advanced optics, AI-guided tracking, and high-powered directed energy into a compact platform that can eliminate low-cost drones for a fraction of the cost of traditional systems. Aurelius is accelerating the deployment of practical, scalable, and field-ready innovation to restore the technological edge in defense.
+                        domain:
+                          id: 1358898
+                          description: Directed Energy for Every Battlefield
+                          logo: https://www.google.com/s2/favicons?domain=aureliussystems.com&sz=128
+                          name: aureliussystems.com
+                          url: https://aureliussystems.com/
+                          website: https://aureliussystems.com/
+                        founded: null
+                        id: aurelius-systems
+                        industries:
+                        - id: 3
+                          title: Manufacturing
+                        - id: 4
+                          title: Information Technology
+                        - id: 81
+                          title: Cyber Security
+                        is_public_company: false
+                        linkedin_url: https://www.linkedin.com/company/aurelius-systems/
+                        list_badges: []
+                        location:
+                          id: 90764
+                          country: United States
+                          short_description: San Francisco, California, United States
+                          title: San Francisco
+                        name: Aurelius Systems
+                        number_of_employees: 18
+                        status_code: private
+                        status_label: PRIVATE
+                        ticker: null
+                      series: Series A
+                      source_url: http://www.businesswire.com/news/home/20260805445217/en/Aurelius-Systems-Secures-40M-Series-A-to-Meet-Growing-Demand-for-Counter-Drone-Systems/?feedref=JjAwJuNHiystnCoBq_hl-bV7DTIYheT0D-1vT4_bKFzt_EW40VMdK6eG-WLfRGUE1fJraLPL1g6AeUGJlCTYs7Oafol48Kkc8KJgZoTHgMu0w8LYSbRdYOj2VdwnuKwa
+                      title: Aurelius Systems secures $40M Series A funding led by Draper Associates and KAS Venture Partners to meet the growing demand for counter-drone systems.
+                      use_of_proceeds: []
+                    meta:
+                      current_page: 1
+                      next_page: 2
+                      total_count: 152681
+                      total_pages: 6108
+                      tier: Pro
+                      remaining_searches: 47
+                    upgrade_url: https://www.fundz.net/pricing
+        '403':
+          description: Missing, invalid, orphaned or non-entitled API key.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                type: Unauthorized
+                message: Authentication required
+        '429':
+          description: Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+              example:
+                error: rate_limit_exceeded
+                current_tier: Pro
+                queries_limit: 500
+                remaining_searches: 0
+                upgrade_url: https://www.fundz.net/pricing
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                type: NotFound
+                message: Not found
+        '500':
+          description: Unexpected server error.
+        default:
+          description: Unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      operationId: listFundings
+components:
+  schemas:
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
+    Funding:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: When Fundz published the event, in UTC. This is the field to poll on for new events.
+        id:
+          type: string
+          description: Stable slug identifier for this record. Safe to use as a deduplication key.
+        investors:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Stable slug identifier for this record. Safe to use as a deduplication key.
+              title:
+                type: string
+                description: Human-readable headline for the event.
+            description: Investors participating in this round, linked to the Fundz investor graph (45,855 investors).
+          description: Investors participating in this round, linked to the Fundz investor graph (45,855 investors).
+        money_raised:
+          type:
+          - string
+          - 'null'
+          description: Amount raised, as a display string, e.g. "$40 Million".
+        organization:
+          $ref: '#/components/schemas/Organization'
+        series:
+          type: string
+          description: Funding stage, e.g. "Seed", "Series A", "Series B".
+        source_url:
+          type: string
+          format: uri
+          description: The public source the event was extracted from (press release, filing or company announcement).
+        title:
+          type: string
+          description: Human-readable headline for the event.
+        use_of_proceeds:
+          type: array
+          items:
+            type: object
+            properties: {}
+      description: A single funding round.
+    RateLimitError:
+      type: object
+      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
+      properties:
+        error:
+          type: string
+          description: Always "rate_limit_exceeded".
+        current_tier:
+          type: string
+          description: The plan attached to your key.
+        queries_limit:
+          type: integer
+          description: Your daily request allowance.
+        remaining_searches:
+          type: integer
+          description: Always 0 in this response.
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise the limit.
+    FundingPage:
+      type: object
+      description: A page of funding rounds.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The funding rounds on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Funding'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    Meta:
+      type: object
+      description: Pagination and quota metadata returned with every list response.
+      properties:
+        current_page:
+          type: integer
+          description: The page you requested. Pages hold 25 records.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number, or null on the last page.
+        total_count:
+          type: integer
+          description: Total records matching the query across all pages.
+        total_pages:
+          type: integer
+          description: Total number of pages available.
+        tier:
+          type: string
+          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
+        remaining_searches:
+          type: integer
+          description: Requests left in your current quota window.
+    Organization:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Company description.
+        domain:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: integer
+              description: Stable slug identifier for this record. Safe to use as a deduplication key.
+            description:
+              type:
+              - string
+              - 'null'
+              description: Company description.
+            logo:
+              type: string
+              format: uri
+              description: Company logo image URL.
+            name:
+              type: string
+              description: Company name.
+            url:
+              type:
+              - string
+              - 'null'
+              format: uri
+              description: Company website URL.
+            website:
+              type: string
+              format: uri
+              description: Company website.
+          description: The company web domain, resolved and verified.
+        founded:
+          type:
+          - string
+          - 'null'
+          description: Year the company was founded, where known.
+        id:
+          type: string
+          description: Stable slug identifier for this record. Safe to use as a deduplication key.
+        industries:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Stable slug identifier for this record. Safe to use as a deduplication key.
+              title:
+                type: string
+                description: Human-readable headline for the event.
+            description: Industry classifications applied to the company.
+          description: Industry classifications applied to the company.
+        is_public_company:
+          type: boolean
+          description: True when the company is publicly traded.
+        linkedin_url:
+          type:
+          - string
+          - 'null'
+          description: Company LinkedIn page.
+        list_badges:
+          type: array
+          items:
+            type: object
+            properties:
+              list_name:
+                type: string
+              list_year:
+                type: integer
+              rank:
+                type:
+                - string
+                - 'null'
+              label:
+                type: string
+            description: Badges applied to the company by Fundz curation lists.
+          description: Badges applied to the company by Fundz curation lists.
+        location:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: integer
+              description: Stable slug identifier for this record. Safe to use as a deduplication key.
+            country:
+              type: string
+              description: Country name.
+            short_description:
+              type: string
+              description: Full location string, e.g. "San Francisco, California, United States".
+            title:
+              type: string
+              description: Human-readable headline for the event.
+          description: Company headquarters location.
+        name:
+          type: string
+          description: Company name.
+        number_of_employees:
+          type:
+          - integer
+          - 'null'
+          description: Headcount, where known. Null when not disclosed.
+        status_code:
+          type: string
+          description: Company status, e.g. "private" or "public".
+        status_label:
+          type: string
+          description: Display form of status_code.
+        ticker:
+          type:
+          - string
+          - 'null'
+          description: Stock ticker for public companies. Null for private companies.
+      description: The company the event is about. Identical shape on every endpoint.
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: 'API key passed as the raw value of the `Authorization` header — **no `Bearer` prefix**.
+
+
+        ```
+
+        Authorization: YOUR_API_KEY
+
+        ```
+
+
+        Get a key instantly and self-serve at https://www.fundz.net/api-trial. Requests without a valid key return HTTP 403. Your remaining quota is reported on every successful response as `meta.remaining_searches`, and your plan as `meta.tier`.'
+externalDocs:
+  description: Fundz API documentation and self-serve key
+  url: https://app.fundz.net/fundz-api

@@ -31,8 +31,8 @@ tags:
 apis:
 - aid: fundz:fundz-api
   name: Fundz API
-  description: Company profiles, funding rounds, SEC filings and fund formations, keyed to real-time business
-    events.
+  description: >-
+    Company profiles, funding rounds, SEC filings and fund formations, keyed to real-time business events.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://www.fundz.net/fundz-api
   baseURL: https://api.fundz.net
@@ -59,6 +59,73 @@ apis:
     type: MCPServer
   - url: https://app.fundz.net/llms.txt
     type: LlmsText
+- aid: fundz:fundz-acquisitions-api
+  name: Fundz Acquisitions API
+  description: >-
+    Company acquisitions and M&A events, with acquirer and target organization records where disclosed.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Acquisitions
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-acquisitions-api-openapi.yml
+- aid: fundz:fundz-agreements-api
+  name: Fundz Agreements API
+  description: >-
+    Business agreements and partnerships announced by companies — distribution, licensing, joint ventures
+    and similar.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Agreements
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-agreements-api-openapi.yml
+- aid: fundz:fundz-crowdfundings-api
+  name: Fundz Crowdfundings API
+  description: >-
+    Regulation CF and Regulation A crowdfunding campaigns, sourced from SEC Form C and Form 1-A filings.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Crowdfundings
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-crowdfundings-api-openapi.yml
+- aid: fundz:fundz-executives-api
+  name: Fundz Executives API
+  description: >-
+    Executive hires and appointments — new C-level, VP and board appointments at private and public companies.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Executives
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-executives-api-openapi.yml
+- aid: fundz:fundz-fundings-api
+  name: Fundz Fundings API
+  description: >-
+    Funding rounds — seed through late-stage venture and private equity — with the investors on the round
+    and the full organization record.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Fundings
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-fundings-api-openapi.yml
+- aid: fundz:fundz-products-api
+  name: Fundz Products API
+  description: Product launches and major product announcements.
+  humanURL: https://www.fundz.net/fundz-api
+  baseURL: https://api.fundz.net
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/fundz-products-api-openapi.yml
 common:
 - url: https://www.fundz.net/
   type: Website
@@ -112,13 +179,28 @@ X-Discovery:
     real: true
     note: Base URL api.fundz.net and Authorization-header auth read from here.
   - surface: OpenAPI
+    url: https://raw.githubusercontent.com/Fund-z/fundz-api-spec/main/openapi.json
+    http_status: 200
+    real: true
+    date: '2026-08-13'
+    note: 'RESOLVED — claim now confirmed, harvested not reconstructed. OpenAPI 3.0.0, "Fundz API" v1.1.0,
+      104KB, 6 paths, 16 component schemas, apiKey security, servers[0] https://api.fundz.net which matches
+      the registered baseURL. Archived verbatim to openapi/_original/fundz-openapi.json and refined into
+      6 per-tag documents, 0 errors and 0 dangling $refs. Published in Fund-z/fundz-api-spec — the same
+      GitHub org as the already-verified fundzwatch-mcp repository, so ownership is consistent.'
+  - surface: OpenAPI
     url: https://api.fundz.net/openapi.json
     http_status: 404
     real: false
-    note: CLAIM NOT CONFIRMED. The founder states "we publish an OpenAPI spec"; none was discoverable.
-      404 on /openapi.json, /openapi.yaml, /swagger.json, /api-docs, /docs, /redoc, /spec, /v1/openapi.json
-      and /.well-known/openapi.json at api.fundz.net, on app.fundz.net, and in the fundzwatch-mcp repository.
-      No spec was modelled on their behalf — the gap is recorded instead.
+    date: '2026-08-03'
+    superseded_by: https://raw.githubusercontent.com/Fund-z/fundz-api-spec/main/openapi.json
+    note: HISTORICAL — kept as provenance, do not delete. On 2026-08-03 the founder stated "we publish
+      an OpenAPI spec" and none was discoverable — 404 on /openapi.json, /openapi.yaml, /swagger.json,
+      /api-docs, /docs, /redoc, /spec, /v1/openapi.json and /.well-known/openapi.json at api.fundz.net,
+      on app.fundz.net, and in the fundzwatch-mcp repository. No spec was modelled on their behalf; the
+      gap was recorded instead. The spec was NOT hidden from a discoverable path — it lives in a separate
+      repository nothing at api.fundz.net or app.fundz.net links to, and the founder supplied the URL
+      directly on 2026-08-06.
   - surface: WellKnown
     url: https://fundz.net/.well-known/api-catalog
     http_status: 404
