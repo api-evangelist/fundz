@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fundz Acquisitions API",
+    "version": "1.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Acquisitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve acquisitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fundz.net/acquisitions",
+            "params": [
+              {
+                "name": "created_from",
+                "value": "2026-08-01",
+                "type": "query",
+                "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "created_to",
+                "value": "2026-08-05",
+                "type": "query",
+                "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "locations",
+                "value": "San Francisco",
+                "type": "query",
+                "description": "Locations titles and short_description filter"
+              },
+              {
+                "name": "industries",
+                "value": "Information Technology",
+                "type": "query",
+                "description": "Industry titles filter"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Monitor mergers and acquisitions activity across markets. Track which companies are being acquired, who is buying them, and emerging M&A trends. Valuable for competitive intelligence, market analysis, and identifying consolidation patterns in specific industries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

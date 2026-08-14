@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fundz Crowdfundings API",
+    "version": "1.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Crowdfundings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve crowdfunding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fundz.net/crowdfundings",
+            "params": [
+              {
+                "name": "created_from",
+                "value": "2026-08-01",
+                "type": "query",
+                "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "created_to",
+                "value": "2026-08-05",
+                "type": "query",
+                "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "deadline_from",
+                "value": "example",
+                "type": "query",
+                "description": "Filter by deadline from (YYYY-MM-DD)"
+              },
+              {
+                "name": "deadline_to",
+                "value": "example",
+                "type": "query",
+                "description": "Filter by deadline to (YYYY-MM-DD)"
+              },
+              {
+                "name": "offering_amount_min",
+                "value": "1",
+                "type": "query",
+                "description": "Minimum offering amount"
+              },
+              {
+                "name": "offering_amount_max",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum offering amount"
+              },
+              {
+                "name": "offered_types",
+                "value": "Equity",
+                "type": "query",
+                "description": "Offered types"
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Access active and completed crowdfunding campaigns. Perfect for discovering investment opportunities, and monitoring crowdfunding market trends."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,607 @@
+{
+  "item": [
+    {
+      "id": "40560a57-2c5e-4221-8c2d-d3080dc1c326",
+      "name": "Crowdfundings",
+      "description": {
+        "content": "Regulation CF and Regulation A crowdfunding campaigns, sourced from SEC Form C and Form 1-A filings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5ba20102-dfb6-4631-9689-2a078c0672bc",
+          "name": "Retrieve crowdfunding",
+          "request": {
+            "name": "Retrieve crowdfunding",
+            "description": {
+              "content": "Access active and completed crowdfunding campaigns. Perfect for discovering investment opportunities, and monitoring crowdfunding market trends.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crowdfundings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created_from",
+                  "value": "<string>",
+                  "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_to",
+                  "value": "<string>",
+                  "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "deadline_from",
+                  "value": "<string>",
+                  "description": "Filter by deadline from (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "deadline_to",
+                  "value": "<string>",
+                  "description": "Filter by deadline to (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offering_amount_min",
+                  "value": "<integer>",
+                  "description": "Minimum offering amount"
+                },
+                {
+                  "disabled": false,
+                  "key": "offering_amount_max",
+                  "value": "<integer>",
+                  "description": "Maximum offering amount"
+                },
+                {
+                  "disabled": false,
+                  "key": "offered_types",
+                  "value": "<string>",
+                  "description": "Offered types"
+                },
+                {
+                  "disabled": false,
+                  "key": "offered_types",
+                  "value": "<string>",
+                  "description": "Offered types"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6b1d6e2d-f010-4753-bf09-66de6dc9760d",
+              "name": "A page of crowdfunding campaigns, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_attribution\": \"Data provided by Fundz — https://fundz.net\",\n  \"_licensing\": \"Commercial use, redistribution or embedding requires a licence — john@fundz.net\",\n  \"data\": [\n    {\n      \"city\": \"Miami\",\n      \"created_at\": \"2026-08-05T10:10:18Z\",\n      \"deadline_date\": null,\n      \"filing\": \"1-A\",\n      \"financials\": {\n        \"auditor\": \"BCRG Group\",\n        \"eps_basic\": \"-0.01\",\n        \"net_income\": \"-536600.00\",\n        \"eps_diluted\": \"-0.01\",\n        \"total_assets\": \"2952920.00\",\n        \"long_term_debt\": \"0.00\",\n        \"total_revenues\": \"0.00\",\n        \"accounts_payable\": \"689520.00\",\n        \"cash_equivalents\": \"2367920.00\",\n        \"cost_and_expenses\": \"0.00\",\n        \"total_liabilities\": \"3489520.00\",\n        \"accounts_receivable\": \"0.00\",\n        \"full_time_employees\": \"39\",\n        \"part_time_employees\": \"0\",\n        \"investment_securities\": \"0.00\",\n        \"property_plant_equipment\": \"0.00\",\n        \"total_stockholder_equity\": \"-536600.00\",\n        \"depreciation_amortization\": \"0.00\",\n        \"total_liabilities_and_equity\": \"2952920.00\",\n        \"price_per_security\": \"4.0000\",\n        \"securities_offered\": \"6000000\"\n      },\n      \"id\": \"naoris-quantum-protocol-crowdfunding-24m-ccdc\",\n      \"issuer_contact_name\": \"Louis A. Bevilacqua\",\n      \"issuer_name\": \"Naoris Quantum Protocol Inc.\",\n      \"issuer_organization\": {\n        \"id\": \"naoris-quantum-protocol\",\n        \"industries\": [\n          {\n            \"id\": 2,\n            \"title\": \"Other\"\n          }\n        ],\n        \"is_public_company\": false,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 4687,\n          \"country\": \"United States\",\n          \"short_description\": \"Miami, Florida, United States\",\n          \"title\": \"Miami\"\n        },\n        \"name\": \"Naoris Quantum Protocol\",\n        \"number_of_employees\": null,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"issuer_phone\": \"1-833-333-7329\",\n      \"issuer_website\": null,\n      \"jurisdictions\": [\n        \"AL\",\n        \"AK\",\n        \"AZ\",\n        \"AR\",\n        \"CA\",\n        \"CO\",\n        \"CT\",\n        \"DE\",\n        \"FL\",\n        \"GA\",\n        \"HI\",\n        \"ID\",\n        \"IL\",\n        \"IN\",\n        \"IA\",\n        \"KS\",\n        \"KY\",\n        \"LA\",\n        \"ME\",\n        \"MD\",\n        \"MA\",\n        \"MI\",\n        \"MN\",\n        \"MS\",\n        \"MO\",\n        \"MT\",\n        \"NE\",\n        \"NV\",\n        \"NH\",\n        \"NJ\",\n        \"NM\",\n        \"NY\",\n        \"NC\",\n        \"ND\",\n        \"OH\",\n        \"OK\",\n        \"OR\",\n        \"PA\",\n        \"RI\",\n        \"SC\",\n        \"SD\",\n        \"TN\",\n        \"TX\",\n        \"UT\",\n        \"VT\",\n        \"VA\",\n        \"WA\",\n        \"WV\",\n        \"WI\",\n        \"WY\",\n        \"DC\",\n        \"PR\",\n        \"A0\",\n        \"A1\",\n        \"A2\",\n        \"A3\",\n        \"A4\",\n        \"A5\",\n        \"A6\",\n        \"A7\",\n        \"A8\",\n        \"A9\",\n        \"B0\"\n      ],\n      \"offering_amount\": \"$24 Million\",\n      \"offerred_type\": \"Equity (common or preferred stock)\",\n      \"portal\": null,\n      \"portal_url\": null,\n      \"sec_url\": \"https://www.sec.gov/Archives/edgar/data/2145466/000121390026085345/0001213900-26-085345-index.htm\",\n      \"state\": \"FL\",\n      \"street1\": \"848 Brickell Ave, PH 1\",\n      \"street2\": null,\n      \"tier\": \"Tier2\",\n      \"title\": \"Naoris Quantum Protocol is looking to raise $24 Million\",\n      \"zip_code\": \"33131\"\n    },\n    {\n      \"city\": \"WILMINGTON\",\n      \"created_at\": \"2026-08-05T10:10:16Z\",\n      \"deadline_date\": \"2027-04-30T00:00:00Z\",\n      \"filing\": \"C/A\",\n      \"financials\": null,\n      \"id\": \"simplex-chat-crowdfunding-50k-433e\",\n      \"issuer_contact_name\": null,\n      \"issuer_name\": \"Simplex Chat, Inc.\",\n      \"issuer_organization\": {\n        \"id\": \"simplex-chat\",\n        \"industries\": [],\n        \"is_public_company\": false,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 4872,\n          \"country\": \"United States\",\n          \"short_description\": \"Wilmington, Delaware, United States\",\n          \"title\": \"Wilmington\"\n        },\n        \"name\": \"Simplex Chat\",\n        \"number_of_employees\": null,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"issuer_phone\": null,\n      \"issuer_website\": \"simplex.chat\",\n      \"jurisdictions\": null,\n      \"offering_amount\": \"$50,000\",\n      \"offerred_type\": \"Other\",\n      \"portal\": \"Wefunder Portal LLC\",\n      \"portal_url\": \"https://www.Wefunder.com\",\n      \"sec_url\": \"https://www.sec.gov/Archives/edgar/data/2140143/000214014326000004/0002140143-26-000004-index.htm\",\n      \"state\": \"DE\",\n      \"street1\": \"800 KING N STREET\",\n      \"street2\": \"SUITE 304-2697\",\n      \"tier\": null,\n      \"title\": \"Simplex Chat is looking to raise $50,000\",\n      \"zip_code\": \"19801\"\n    }\n  ],\n  \"meta\": {\n    \"current_page\": 1,\n    \"next_page\": 2,\n    \"total_count\": 16918,\n    \"total_pages\": 677,\n    \"tier\": \"Pro\",\n    \"remaining_searches\": 46\n  },\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0fa6653-34d8-4029-9c48-5c640675f2d2",
+              "name": "Missing, invalid, orphaned or non-entitled API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"Unauthorized\",\n  \"message\": \"Authentication required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4523b42f-040c-43e7-90f2-5c0468a12c22",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NotFound\",\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f3b60ce-b8d5-4303-bbdd-24857017966a",
+              "name": "Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"current_tier\": \"Pro\",\n  \"queries_limit\": 500,\n  \"remaining_searches\": 0,\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85aa399e-0ff4-47a0-b683-c511265ec598",
+              "name": "Unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "27361f21-29ac-4875-8186-ee2b2f695043",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crowdfundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "deadline_from",
+                      "value": "example"
+                    },
+                    {
+                      "key": "deadline_to",
+                      "value": "example"
+                    },
+                    {
+                      "key": "offering_amount_min",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offering_amount_max",
+                      "value": "1"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fundz.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c094c5cd-5973-4f27-a41b-2341091686b9",
+    "name": "Fundz Crowdfundings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.\n\n**Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.\n\n**Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.\n\n**Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.\n\n**Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.\n\n**Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.\n\n**Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).\n\nContact Support:\n Name: Fundz API Support\n Email: john@fundz.net",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fundz Fundings API",
+    "version": "1.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fundings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve funding rounds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fundz.net/fundings",
+            "params": [
+              {
+                "name": "created_from",
+                "value": "2026-08-01",
+                "type": "query",
+                "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "created_to",
+                "value": "2026-08-05",
+                "type": "query",
+                "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+              },
+              {
+                "name": "money_raised_min",
+                "value": "1000000",
+                "type": "query",
+                "description": "Minimum money raised"
+              },
+              {
+                "name": "money_raised_max",
+                "value": "50000000",
+                "type": "query",
+                "description": "Maximum money raised"
+              },
+              {
+                "name": "number_of_employees_min",
+                "value": "10",
+                "type": "query",
+                "description": "Minimum number of employees"
+              },
+              {
+                "name": "number_of_employees_max",
+                "value": "500",
+                "type": "query",
+                "description": "Maximum number of employees"
+              },
+              {
+                "name": "keywords",
+                "value": "artificial intelligence",
+                "type": "query",
+                "description": "Free-text search across the event title and the company description."
+              },
+              {
+                "name": "series",
+                "value": "Series A",
+                "type": "query",
+                "description": "Funding series"
+              },
+              {
+                "name": "offered_types",
+                "value": "Equity",
+                "type": "query",
+                "description": "Offered types"
+              },
+              {
+                "name": "locations",
+                "value": "San Francisco",
+                "type": "query",
+                "description": "Locations titles and short_description filter"
+              },
+              {
+                "name": "industries",
+                "value": "Information Technology",
+                "type": "query",
+                "description": "Industry titles filter"
+              },
+              {
+                "name": "investors",
+                "value": "General Catalyst",
+                "type": "query",
+                "description": "Filter to rounds involving this investor, matched against the Fundz investor graph."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve a feed of funding rounds, including seed rounds, Series A-F, venture capital, and private equity investments. Use this endpoint to track investment activity, discover newly funded companies, and analyze funding trends across different industries and locations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,523 @@
+{
+  "item": [
+    {
+      "id": "9bdcf783-693f-40cf-9054-768c1521dffd",
+      "name": "Products",
+      "description": {
+        "content": "Product launches and major product announcements.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6384e098-d39f-43ac-9dec-823d0097a349",
+          "name": "Retrieve product launches",
+          "request": {
+            "name": "Retrieve product launches",
+            "description": {
+              "content": "Stay updated on new product launches, feature releases, and service announcements from companies. Track innovation trends, monitor competitor product releases, and identify emerging technologies. Perfect for product managers, market researchers, and competitive analysts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created_from",
+                  "value": "<string>",
+                  "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_to",
+                  "value": "<string>",
+                  "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0b128de6-cf0d-4075-a512-444be33e7176",
+              "name": "A page of product launchs, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_attribution\": \"Data provided by Fundz — https://fundz.net\",\n  \"_licensing\": \"Commercial use, redistribution or embedding requires a licence — john@fundz.net\",\n  \"data\": [\n    {\n      \"created_at\": \"2026-08-05T13:10:30Z\",\n      \"id\": \"kms-lighthouse-product-launch-3f20aa\",\n      \"organization\": {\n        \"id\": \"kms-lighthouse\",\n        \"industries\": [\n          {\n            \"id\": 23,\n            \"title\": \"Software\"\n          },\n          {\n            \"id\": 39,\n            \"title\": \"Artificial Intelligence\"\n          },\n          {\n            \"id\": 85,\n            \"title\": \"Saas\"\n          },\n          {\n            \"id\": 86,\n            \"title\": \"Enterprise Software\"\n          },\n          {\n            \"id\": 107,\n            \"title\": \"Machine Learning\"\n          },\n          {\n            \"id\": 108,\n            \"title\": \"Natural Language Processing\"\n          }\n        ],\n        \"is_public_company\": false,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 10993,\n          \"country\": \"United States\",\n          \"short_description\": \"Dallas, Texas, United States\",\n          \"title\": \"Dallas\"\n        },\n        \"name\": \"KMS Lighthouse\",\n        \"number_of_employees\": null,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"title\": \"KMS Lighthouse has launched KMS Lighthouse for Jira, an app that provides instant access to governed knowledge directly in Jira's issue view.\"\n    },\n    {\n      \"created_at\": \"2026-08-05T13:10:29Z\",\n      \"id\": \"ichrax-product-launch-f3bbf9\",\n      \"organization\": {\n        \"id\": \"ichrax\",\n        \"industries\": [\n          {\n            \"id\": 36,\n            \"title\": \"Health Care\"\n          },\n          {\n            \"id\": 89,\n            \"title\": \"Employee Benefits\"\n          }\n        ],\n        \"is_public_company\": false,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 10993,\n          \"country\": \"United States\",\n          \"short_description\": \"Dallas, Texas, United States\",\n          \"title\": \"Dallas\"\n        },\n        \"name\": \"ICHRAx\",\n        \"number_of_employees\": null,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"title\": \"ICHRAx launches a health insurance technology platform to standardize enrollment and billing for ICHRA plans.\"\n    }\n  ],\n  \"meta\": {\n    \"current_page\": 1,\n    \"next_page\": 2,\n    \"total_count\": 25309,\n    \"total_pages\": 1013,\n    \"tier\": \"Pro\",\n    \"remaining_searches\": 42\n  },\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea9da05b-c373-4f66-86b6-d236b316d31f",
+              "name": "Missing, invalid, orphaned or non-entitled API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"Unauthorized\",\n  \"message\": \"Authentication required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5859a425-ead0-4d34-b6f8-36eb8e01cb2c",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NotFound\",\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cd5acec-3d0a-4c47-a16a-10727d95316f",
+              "name": "Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"current_tier\": \"Pro\",\n  \"queries_limit\": 500,\n  \"remaining_searches\": 0,\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca377f8b-7e84-4d0a-8fe5-fd4731ba503b",
+              "name": "Unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a2ea36fd-52c8-48d8-b5a8-d28ebd4a1c3b",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fundz.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8afe28e2-48a9-44a4-a4cb-f92530ba3e8c",
+    "name": "Fundz Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.\n\n**Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.\n\n**Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.\n\n**Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.\n\n**Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.\n\n**Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.\n\n**Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).\n\nContact Support:\n Name: Fundz API Support\n Email: john@fundz.net",
+      "type": "text/plain"
+    }
+  }
+}

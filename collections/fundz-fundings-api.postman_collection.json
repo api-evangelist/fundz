@@ -1,0 +1,787 @@
+{
+  "item": [
+    {
+      "id": "d75d63ab-177c-4f38-af2f-ab883a387e68",
+      "name": "Fundings",
+      "description": {
+        "content": "Funding rounds — seed through late-stage venture and private equity — with the investors on the round and the full organization record.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b4a5c247-41b3-4125-ab3f-511e758a3b1b",
+          "name": "Retrieve funding rounds",
+          "request": {
+            "name": "Retrieve funding rounds",
+            "description": {
+              "content": "Retrieve a feed of funding rounds, including seed rounds, Series A-F, venture capital, and private equity investments. Use this endpoint to track investment activity, discover newly funded companies, and analyze funding trends across different industries and locations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fundings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created_from",
+                  "value": "<string>",
+                  "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_to",
+                  "value": "<string>",
+                  "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "money_raised_min",
+                  "value": "<integer>",
+                  "description": "Minimum money raised"
+                },
+                {
+                  "disabled": false,
+                  "key": "money_raised_max",
+                  "value": "<integer>",
+                  "description": "Maximum money raised"
+                },
+                {
+                  "disabled": false,
+                  "key": "number_of_employees_min",
+                  "value": "<integer>",
+                  "description": "Minimum number of employees"
+                },
+                {
+                  "disabled": false,
+                  "key": "number_of_employees_max",
+                  "value": "<integer>",
+                  "description": "Maximum number of employees"
+                },
+                {
+                  "disabled": false,
+                  "key": "keywords",
+                  "value": "<string>",
+                  "description": "Free-text search across the event title and the company description."
+                },
+                {
+                  "disabled": false,
+                  "key": "keywords",
+                  "value": "<string>",
+                  "description": "Free-text search across the event title and the company description."
+                },
+                {
+                  "disabled": false,
+                  "key": "series",
+                  "value": "<string>",
+                  "description": "Funding series"
+                },
+                {
+                  "disabled": false,
+                  "key": "series",
+                  "value": "<string>",
+                  "description": "Funding series"
+                },
+                {
+                  "disabled": false,
+                  "key": "offered_types",
+                  "value": "<string>",
+                  "description": "Offered types"
+                },
+                {
+                  "disabled": false,
+                  "key": "offered_types",
+                  "value": "<string>",
+                  "description": "Offered types"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "investors",
+                  "value": "<string>",
+                  "description": "Filter to rounds involving this investor, matched against the Fundz investor graph."
+                },
+                {
+                  "disabled": false,
+                  "key": "investors",
+                  "value": "<string>",
+                  "description": "Filter to rounds involving this investor, matched against the Fundz investor graph."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "54a93077-4ccc-476f-8e14-e6bd6189be7c",
+              "name": "A page of funding rounds, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_attribution\": \"Data provided by Fundz — https://fundz.net\",\n  \"_licensing\": \"Commercial use, redistribution or embedding requires a licence — john@fundz.net\",\n  \"data\": [\n    {\n      \"created_at\": \"2026-08-05T13:26:01Z\",\n      \"id\": \"briidge-inc-funding-round-70e9eb\",\n      \"investors\": [\n        {\n          \"id\": 55143,\n          \"title\": \"Lumin Arx Capital Management\"\n        }\n      ],\n      \"money_raised\": \"$500 Million\",\n      \"organization\": {\n        \"description\": \"Bridge Industries, LLC, founded by Jeff Berlin in 2003 is a holding company based in Cleveland, OH. Bridge partners with operating management teams to help successful manufacturers/distributors of engineered products expand into new markets and execute strategic growth plans. bridgeind.com\",\n        \"domain\": {\n          \"id\": 48235,\n          \"description\": \"Free online bridge. Largest bridge site in the world. Duplicate, tournaments, money games, vugraph, more.\",\n          \"logo\": \"https://www.google.com/s2/favicons?domain=www.bridgebase.com&sz=128\",\n          \"name\": \"www.bridgebase.com\",\n          \"url\": \"https://www.bridgebase.com/\",\n          \"website\": \"https://www.bridgebase.com/\"\n        },\n        \"founded\": null,\n        \"id\": \"briidge-inc\",\n        \"industries\": [],\n        \"is_public_company\": false,\n        \"linkedin_url\": null,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 4811,\n          \"country\": \"United States\",\n          \"short_description\": \"Nashville, Arkansas, United States\",\n          \"title\": \"Nashville\"\n        },\n        \"name\": \"Briidge Inc.\",\n        \"number_of_employees\": 9,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"series\": \"Venture - Series Unknown\",\n      \"source_url\": \"https://www.finsmes.com/2026/08/bridge-received-500m-from-luminarx-capital-management.html\",\n      \"title\": \"Bridge received $500M from LuminArx Capital Management to enhance its AI-powered lending platform.\",\n      \"use_of_proceeds\": []\n    },\n    {\n      \"created_at\": \"2026-08-05T13:00:00Z\",\n      \"id\": \"aurelius-systems-funding-round-series-a-a25b2e\",\n      \"investors\": [\n        {\n          \"id\": 51104,\n          \"title\": \"Decisive Point\"\n        },\n        {\n          \"id\": 12140,\n          \"title\": \"Detroit Venture Partners\"\n        },\n        {\n          \"id\": 74651,\n          \"title\": \"Bravo Victor Venture Capital (Bvvc)\"\n        },\n        {\n          \"id\": 339,\n          \"title\": \"Alumni Ventures\"\n        },\n        {\n          \"id\": 74650,\n          \"title\": \"Outlander\"\n        },\n        {\n          \"id\": 74649,\n          \"title\": \"Hanwha Defense Usa\"\n        },\n        {\n          \"id\": 4796,\n          \"title\": \"General Catalyst\"\n        },\n        {\n          \"id\": 71151,\n          \"title\": \"Kas Venture Partners\"\n        },\n        {\n          \"id\": 5385,\n          \"title\": \"Draper Associates\"\n        }\n      ],\n      \"money_raised\": \"$40 Million\",\n      \"organization\": {\n        \"description\": \"Aurelius Systems is developing autonomous laser weapons to counter modern drone threats. Based in San Francisco, the company fuses advanced optics, AI-guided tracking, and high-powered directed energy into a compact platform that can eliminate low-cost drones for a fraction of the cost of traditional systems. Aurelius is accelerating the deployment of practical, scalable, and field-ready innovation to restore the technological edge in defense.\",\n        \"domain\": {\n          \"id\": 1358898,\n          \"description\": \"Directed Energy for Every Battlefield\",\n          \"logo\": \"https://www.google.com/s2/favicons?domain=aureliussystems.com&sz=128\",\n          \"name\": \"aureliussystems.com\",\n          \"url\": \"https://aureliussystems.com/\",\n          \"website\": \"https://aureliussystems.com/\"\n        },\n        \"founded\": null,\n        \"id\": \"aurelius-systems\",\n        \"industries\": [\n          {\n            \"id\": 3,\n            \"title\": \"Manufacturing\"\n          },\n          {\n            \"id\": 4,\n            \"title\": \"Information Technology\"\n          },\n          {\n            \"id\": 81,\n            \"title\": \"Cyber Security\"\n          }\n        ],\n        \"is_public_company\": false,\n        \"linkedin_url\": \"https://www.linkedin.com/company/aurelius-systems/\",\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 90764,\n          \"country\": \"United States\",\n          \"short_description\": \"San Francisco, California, United States\",\n          \"title\": \"San Francisco\"\n        },\n        \"name\": \"Aurelius Systems\",\n        \"number_of_employees\": 18,\n        \"status_code\": \"private\",\n        \"status_label\": \"PRIVATE\",\n        \"ticker\": null\n      },\n      \"series\": \"Series A\",\n      \"source_url\": \"http://www.businesswire.com/news/home/20260805445217/en/Aurelius-Systems-Secures-40M-Series-A-to-Meet-Growing-Demand-for-Counter-Drone-Systems/?feedref=JjAwJuNHiystnCoBq_hl-bV7DTIYheT0D-1vT4_bKFzt_EW40VMdK6eG-WLfRGUE1fJraLPL1g6AeUGJlCTYs7Oafol48Kkc8KJgZoTHgMu0w8LYSbRdYOj2VdwnuKwa\",\n      \"title\": \"Aurelius Systems secures $40M Series A funding led by Draper Associates and KAS Venture Partners to meet the growing demand for counter-drone systems.\",\n      \"use_of_proceeds\": []\n    }\n  ],\n  \"meta\": {\n    \"current_page\": 1,\n    \"next_page\": 2,\n    \"total_count\": 152681,\n    \"total_pages\": 6108,\n    \"tier\": \"Pro\",\n    \"remaining_searches\": 47\n  },\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22d69315-6f90-4706-8441-d68c83e02ea1",
+              "name": "Missing, invalid, orphaned or non-entitled API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"Unauthorized\",\n  \"message\": \"Authentication required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "819ceb8e-27b4-4449-ab79-915245fd9161",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NotFound\",\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eac99110-5566-49be-b263-48c3b279bb6f",
+              "name": "Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"current_tier\": \"Pro\",\n  \"queries_limit\": 500,\n  \"remaining_searches\": 0,\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc8adb34-4628-4d66-87cf-298a39b0946d",
+              "name": "Unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dacfcd9d-1c02-44be-9ea9-52c7f20a1cee",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fundings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "money_raised_min",
+                      "value": "1000000"
+                    },
+                    {
+                      "key": "money_raised_max",
+                      "value": "50000000"
+                    },
+                    {
+                      "key": "number_of_employees_min",
+                      "value": "10"
+                    },
+                    {
+                      "key": "number_of_employees_max",
+                      "value": "500"
+                    },
+                    {
+                      "key": "keywords",
+                      "value": "artificial intelligence"
+                    },
+                    {
+                      "key": "series",
+                      "value": "Series A"
+                    },
+                    {
+                      "key": "offered_types",
+                      "value": "Equity"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "investors",
+                      "value": "General Catalyst"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fundz.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4640c99c-92ac-4884-b796-0ba472c23701",
+    "name": "Fundz Fundings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.\n\n**Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.\n\n**Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.\n\n**Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.\n\n**Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.\n\n**Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.\n\n**Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).\n\nContact Support:\n Name: Fundz API Support\n Email: john@fundz.net",
+      "type": "text/plain"
+    }
+  }
+}

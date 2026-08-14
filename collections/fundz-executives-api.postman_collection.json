@@ -1,0 +1,559 @@
+{
+  "item": [
+    {
+      "id": "d5cb6335-065f-499f-b595-275352c41294",
+      "name": "Executives",
+      "description": {
+        "content": "Executive hires and appointments — new C-level, VP and board appointments at private and public companies.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7b6fe65d-8ebf-48e1-a4ab-da0cf0365a8d",
+          "name": "Retrieve executive changes",
+          "request": {
+            "name": "Retrieve executive changes",
+            "description": {
+              "content": "Track C-level and senior executive appointments across companies. Monitor leadership changes, new hires at the executive level, and identify talent movement patterns. Essential for recruiters, investors, and business development professionals tracking key personnel changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executives"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created_from",
+                  "value": "<string>",
+                  "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_to",
+                  "value": "<string>",
+                  "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "positions",
+                  "value": "<string>",
+                  "description": "Positions filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "positions",
+                  "value": "<string>",
+                  "description": "Positions filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4fa88a20-ad95-486d-94eb-ec7f36b13e22",
+              "name": "A page of executive appointments, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_attribution\": \"Data provided by Fundz — https://fundz.net\",\n  \"_licensing\": \"Commercial use, redistribution or embedding requires a licence — john@fundz.net\",\n  \"data\": [\n    {\n      \"created_at\": \"2026-08-05T13:15:26Z\",\n      \"id\": \"prosperity-hired-150c\",\n      \"organization\": {\n        \"id\": \"prosperity\",\n        \"industries\": [\n          {\n            \"id\": 226,\n            \"title\": \"Document Management\"\n          }\n        ],\n        \"is_public_company\": true,\n        \"list_badges\": [],\n        \"location\": null,\n        \"name\": \"Prosperity\",\n        \"number_of_employees\": null,\n        \"status_code\": \"public\",\n        \"status_label\": \"PUBLIC\",\n        \"ticker\": \"PB\"\n      },\n      \"related_contacts\": [\n        {\n          \"first_name\": \"Brian\",\n          \"id\": 2648947,\n          \"photo_url\": null,\n          \"positions\": [\n            {\n              \"id\": 4229,\n              \"title\": \"Chief Investment Officer\"\n            }\n          ]\n        }\n      ],\n      \"title\": \"Prosperity Appoints Brian W. Katz As Chief Investment Officer\"\n    },\n    {\n      \"created_at\": \"2026-08-05T13:15:26Z\",\n      \"id\": \"idaho-copper-hired-fe9e\",\n      \"organization\": {\n        \"id\": \"idaho-copper\",\n        \"industries\": [\n          {\n            \"id\": 117,\n            \"title\": \"Mining\"\n          },\n          {\n            \"id\": 119,\n            \"title\": \"Mineral\"\n          },\n          {\n            \"id\": 128,\n            \"title\": \"Mining Technology\"\n          }\n        ],\n        \"is_public_company\": true,\n        \"list_badges\": [],\n        \"location\": {\n          \"id\": 4921,\n          \"country\": \"United States\",\n          \"short_description\": \"Boise, Idaho, United States\",\n          \"title\": \"Boise\"\n        },\n        \"name\": \"Idaho Copper\",\n        \"number_of_employees\": 9,\n        \"status_code\": \"public\",\n        \"status_label\": \"PUBLIC\",\n        \"ticker\": \"COPR\"\n      },\n      \"related_contacts\": [\n        {\n          \"first_name\": \"Bruce\",\n          \"id\": 2648946,\n          \"photo_url\": null,\n          \"positions\": [\n            {\n              \"id\": 1,\n              \"title\": \"Chief Financial Officer\"\n            }\n          ]\n        }\n      ],\n      \"title\": \"Idaho Copper Corporation Appoints Bruce Harmon As Chief Financial Officer\"\n    }\n  ],\n  \"meta\": {\n    \"current_page\": 1,\n    \"next_page\": 2,\n    \"total_count\": 46603,\n    \"total_pages\": 1865,\n    \"tier\": \"Pro\",\n    \"remaining_searches\": 44\n  },\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3782384c-92b4-4741-babf-a1315ea7ee34",
+              "name": "Missing, invalid, orphaned or non-entitled API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"Unauthorized\",\n  \"message\": \"Authentication required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a28a0f6-880a-45b6-bcad-9b6ada75dc16",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NotFound\",\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c5cdf77-cb2b-426a-9775-136d3644cf3d",
+              "name": "Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"current_tier\": \"Pro\",\n  \"queries_limit\": 500,\n  \"remaining_searches\": 0,\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12c46dc4-51b1-4486-9f9c-55a8a1e24f04",
+              "name": "Unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e37aec34-6891-4113-98df-44a29d649998",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "positions",
+                      "value": "example"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fundz.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c6ab08af-69bc-44d6-8674-dabc63c4bcc0",
+    "name": "Fundz Executives API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.\n\n**Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.\n\n**Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.\n\n**Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.\n\n**Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.\n\n**Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.\n\n**Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).\n\nContact Support:\n Name: Fundz API Support\n Email: john@fundz.net",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,523 @@
+{
+  "item": [
+    {
+      "id": "9996537e-4586-45c6-a1b5-9f1163078ddd",
+      "name": "Acquisitions",
+      "description": {
+        "content": "Company acquisitions and M&A events, with acquirer and target organization records where disclosed.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f009f561-b165-4b51-a9e9-d7150f1d2c5c",
+          "name": "Retrieve acquisitions",
+          "request": {
+            "name": "Retrieve acquisitions",
+            "description": {
+              "content": "Monitor mergers and acquisitions activity across markets. Track which companies are being acquired, who is buying them, and emerging M&A trends. Valuable for competitive intelligence, market analysis, and identifying consolidation patterns in specific industries.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "acquisitions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "created_from",
+                  "value": "<string>",
+                  "description": "Only return events published on or after this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_to",
+                  "value": "<string>",
+                  "description": "Only return events published on or before this date (YYYY-MM-DD), against `created_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "locations",
+                  "value": "<string>",
+                  "description": "Locations titles and short_description filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "industries",
+                  "value": "<string>",
+                  "description": "Industry titles filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number, 1-based. Responses hold 25 records; use `meta.next_page` to walk the set."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ad728f8a-2960-4b64-a75a-ae9f0f1bbf46",
+              "name": "A page of acquisitions, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"_attribution\": \"Data provided by Fundz — https://fundz.net\",\n  \"_licensing\": \"Commercial use, redistribution or embedding requires a licence — john@fundz.net\",\n  \"data\": [\n    {\n      \"acquirees\": [\n        {\n          \"id\": \"trak-racer\",\n          \"is_public_company\": false,\n          \"list_badges\": [],\n          \"name\": \"Trak Racer\",\n          \"number_of_employees\": null,\n          \"status_code\": \"recently_acquired\",\n          \"status_label\": \"RECENTLY ACQUIRED\",\n          \"ticker\": null\n        }\n      ],\n      \"acquirers\": [\n        {\n          \"id\": \"corsair-gaming\",\n          \"industries\": [\n            {\n              \"id\": 52,\n              \"title\": \"Gaming\"\n            },\n            {\n              \"id\": 106,\n              \"title\": \"Video Games\"\n            }\n          ],\n          \"is_public_company\": true,\n          \"list_badges\": [],\n          \"location\": {\n            \"id\": 4838,\n            \"country\": \"United States\",\n            \"short_description\": \"Palo Alto, California, United States\",\n            \"title\": \"Palo Alto\"\n          },\n          \"name\": \"Corsair Gaming\",\n          \"number_of_employees\": null,\n          \"status_code\": \"public\",\n          \"status_label\": \"PUBLIC\",\n          \"ticker\": \"CRSR\"\n        }\n      ],\n      \"created_at\": \"2026-08-05T13:10:17Z\",\n      \"id\": \"acquires-4db5-260e5463-2a65-4f84-ba60-736380ee12dd\",\n      \"title\": \"Corsair Gaming acquires Trak Racer assets\"\n    },\n    {\n      \"acquirees\": [\n        {\n          \"id\": \"stmicroelectronics-international-nv\",\n          \"is_public_company\": false,\n          \"list_badges\": [],\n          \"name\": \"ST\",\n          \"number_of_employees\": null,\n          \"status_code\": \"private\",\n          \"status_label\": \"PRIVATE\",\n          \"ticker\": null\n        }\n      ],\n      \"acquirers\": [\n        {\n          \"id\": \"charlton-aria-acquisition-corporation\",\n          \"industries\": [\n            {\n              \"id\": 39,\n              \"title\": \"Artificial Intelligence\"\n            }\n          ],\n          \"is_public_company\": false,\n          \"list_badges\": [],\n          \"location\": {\n            \"id\": 4872,\n            \"country\": \"United States\",\n            \"short_description\": \"Wilmington, Delaware, United States\",\n            \"title\": \"Wilmington\"\n          },\n          \"name\": \"CHARLTON ARIA ACQUISITION CORPORATION\",\n          \"number_of_employees\": null,\n          \"status_code\": \"private\",\n          \"status_label\": \"PRIVATE\",\n          \"ticker\": null\n        }\n      ],\n      \"created_at\": \"2026-08-05T13:10:16Z\",\n      \"id\": \"acquires-448b\",\n      \"title\": \"Charlton Aria Acquisition Corporation Announces Acquisition of ST\"\n    }\n  ],\n  \"meta\": {\n    \"current_page\": 1,\n    \"next_page\": 2,\n    \"total_count\": 34878,\n    \"total_pages\": 1396,\n    \"tier\": \"Pro\",\n    \"remaining_searches\": 45\n  },\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1af3edcf-11c5-4c66-9b1d-927e60babeac",
+              "name": "Missing, invalid, orphaned or non-entitled API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"Unauthorized\",\n  \"message\": \"Authentication required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3c5dc2b-5345-4225-87f9-204577da6507",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"NotFound\",\n  \"message\": \"Not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e65c34e5-877c-4997-b767-88ca074b1f9c",
+              "name": "Daily request quota for your tier is exhausted. Watch `meta.remaining_searches` on successful responses to avoid this.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"rate_limit_exceeded\",\n  \"current_tier\": \"Pro\",\n  \"queries_limit\": 500,\n  \"remaining_searches\": 0,\n  \"upgrade_url\": \"https://www.fundz.net/pricing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee9a80cd-61fa-4ad3-8ad0-27dcb83fb282",
+              "name": "Unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "173f9a04-a979-437c-964c-e0da453100ce",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "acquisitions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "created_from",
+                      "value": "2026-08-01"
+                    },
+                    {
+                      "key": "created_to",
+                      "value": "2026-08-05"
+                    },
+                    {
+                      "key": "locations",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "key": "industries",
+                      "value": "Information Technology"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fundz.net",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f9d94704-fa6d-4271-b26e-a7bfc5e82a59",
+    "name": "Fundz Acquisitions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.\n\n**Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.\n\n**Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.\n\n**Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.\n\n**Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.\n\n**Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.\n\n**Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).\n\nContact Support:\n Name: Fundz API Support\n Email: john@fundz.net",
+      "type": "text/plain"
+    }
+  }
+}
