@@ -12,7 +12,7 @@ description: 'Fundz is an event-first business intelligence platform, founded 20
   and publishes an llms.txt.'
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fundz.png
 created: '2026-08-03'
-modified: '2026-08-03'
+modified: '2026-08-14'
 specificationVersion: '0.21'
 type: Index
 position: Producing
@@ -53,7 +53,7 @@ apis:
     type: Pricing
   - url: authentication/fundz-authentication.yml
     type: Authentication
-  - url: plans/fundz-plans.yml
+  - url: plans/fundz-plans-pricing.yml
     type: Plans
   - url: mcp/fundz-mcp.yml
     type: MCPServer
@@ -70,6 +70,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-acquisitions-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-acquisitions-api-overlay.yaml
 - aid: fundz:fundz-agreements-api
   name: Fundz Agreements API
   description: >-
@@ -82,6 +84,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-agreements-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-agreements-api-overlay.yaml
 - aid: fundz:fundz-crowdfundings-api
   name: Fundz Crowdfundings API
   description: >-
@@ -93,6 +97,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-crowdfundings-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-crowdfundings-api-overlay.yaml
 - aid: fundz:fundz-executives-api
   name: Fundz Executives API
   description: >-
@@ -104,6 +110,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-executives-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-executives-api-overlay.yaml
 - aid: fundz:fundz-fundings-api
   name: Fundz Fundings API
   description: >-
@@ -116,6 +124,8 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-fundings-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-fundings-api-overlay.yaml
 - aid: fundz:fundz-products-api
   name: Fundz Products API
   description: Product launches and major product announcements.
@@ -126,7 +136,40 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/fundz-products-api-openapi.yml
+  - type: Overlay
+    url: overlays/fundz-products-api-overlay.yaml
+- aid: fundz:fundzwatch-api
+  name: FundzWatch API
+  description: >-
+    The agent-facing Fundz surface, served on the same host under /v1/watch/*: AI-scored leads
+    matched to an ICP, a raw business-event feed, a company watchlist, nightly market aggregates,
+    and signed webhooks. It is a separate product from the Fundz event feeds — different auth
+    (Bearer with fundz_test_/fundz_live_ key prefixes), a free Developer tier, and the surface the
+    first-party Python SDK and MCP server actually call. Documented in prose only; no OpenAPI is
+    published for it.
+  humanURL: https://fundzwatch.ai/docs
+  baseURL: https://api.fundz.net/v1/watch
+  tags:
+  - Agents
+  - Signals
+  - Webhooks
+  - Sales Intelligence
+  properties:
+  - url: https://fundzwatch.ai/docs
+    type: Documentation
+  - url: https://fundzwatch.ai/onboarding
+    type: Signup
+  - url: asyncapi/fundz-webhooks.yml
+    type: Webhooks
+  - url: mcp/fundz-mcp.yml
+    type: MCPServer
+  - url: mcp/fundz-tool-crosswalk.yml
+    type: ToolCrosswalk
+  - url: sandbox/fundz-sandbox.yml
+    type: Sandbox
 common:
+- type: DomainSecurity
+  url: security/fundz-domain-security.yml
 - url: https://www.fundz.net/
   type: Website
 - url: https://www.fundz.net/fundz-api
@@ -139,12 +182,60 @@ common:
   type: LlmsText
 - url: mcp/fundz-mcp.yml
   type: MCPServer
-- url: plans/fundz-plans.yml
+- url: plans/fundz-plans-pricing.yml
   type: Plans
 - url: authentication/fundz-authentication.yml
   type: Authentication
 - url: https://github.com/Fund-z/fundzwatch-mcp
   type: GitHubRepository
+- url: packages/fundz-packages.yml
+  type: Packages
+- url: packages/fundz-packages.yml
+  type: SDKs
+- url: mcp/fundz-tool-crosswalk.yml
+  type: ToolCrosswalk
+- url: conventions/fundz-conventions.yml
+  type: Conventions
+- url: errors/fundz-problem-types.yml
+  type: ErrorCatalog
+- url: rate-limits/fundz-rate-limits.yml
+  type: RateLimits
+- url: lifecycle/fundz-lifecycle.yml
+  type: Lifecycle
+- url: conformance/fundz-conformance.yml
+  type: Conformance
+- url: data-model/fundz-data-model.yml
+  type: DataModel
+- url: sandbox/fundz-sandbox.yml
+  type: Sandbox
+- url: asyncapi/fundz-webhooks.yml
+  type: Webhooks
+- url: skills/_index.yml
+  type: AgentSkill
+- url: llms/fundz-llms.txt
+  type: LLMsTxt
+- url: https://app.fundz.net/knowledge/api-references
+  type: APIReference
+- url: https://app.fundz.net/knowledge/api-references/authentication
+  type: GettingStarted
+- url: https://www.fundz.net/fundz-api
+  type: DeveloperPortal
+- url: https://app.fundz.net/knowledge
+  type: KnowledgeBase
+- url: https://www.fundz.net/contact
+  type: Support
+- url: https://www.fundz.net/blog
+  type: Blog
+- url: https://github.com/Fund-z
+  type: GitHubOrganization
+- url: https://github.com/Fund-z/fundz-api-spec
+  type: GitHubRepository
+- url: https://www.fundz.net/terms
+  type: TermsOfService
+- url: https://www.fundz.net/privacy
+  type: PrivacyPolicy
+- url: https://www.fundz.net/fundz-data-licensing
+  type: Licensing
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -205,3 +296,16 @@ X-Discovery:
     url: https://fundz.net/.well-known/api-catalog
     http_status: 404
     real: false
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Public OpenAPI, a published knowledge-base API reference, a second documented API surface
+    (/v1/watch/*) with signed webhooks, published pricing and quotas, two first-party packages and
+    an official-registry MCP server were all read directly. Nothing about this provider was gated.
+  checked: '2026-08-14'
