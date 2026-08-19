@@ -13,7 +13,7 @@ description: 'Fundz is an event-first business intelligence platform, founded 20
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fundz.png
 created: '2026-08-03'
 modified: '2026-08-14'
-specificationVersion: '0.21'
+specificationVersion: '0.23'
 type: Index
 position: Producing
 access: 3rd-Party
