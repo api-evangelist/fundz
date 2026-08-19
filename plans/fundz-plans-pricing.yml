@@ -1,0 +1,129 @@
+generated: '2026-08-14'
+method: searched
+source: https://fundz.net/pricing
+description: >-
+  Three published, self-serve plans with public prices — the thing Fundz competes on against
+  Crunchbase and PitchBook. API access is bundled into the plan rather than sold as a separate
+  SKU, and there is no enterprise quote required to get a key. Annual pricing is a real discount
+  the page states "never rises", not a first-year intro rate.
+verified: '2026-08-14'
+plan_count: 3
+currency: USD
+billing_periods: [monthly, annual]
+api_access_model: bundled-into-plan
+plans:
+- name: Starter
+  price_annual_per_month: 29
+  price_monthly: 39
+  currency: USD
+  period: month
+  audience: BDRs and SDRs sourcing accounts
+  api_access: false
+  api_quota: null
+  included:
+    tracked_companies: 10
+    ai_matched_leads_per_day: 3
+    deep_dives_per_day: 0
+    signal_streams: 18
+    decision_maker: name, title and LinkedIn only
+    support: Email support
+  excluded:
+  - contact email addresses
+  - Engage
+  - SmartSend
+  - Deep Dives
+  - API access
+  - CSV export
+- name: Pro
+  price_annual_per_month: 49
+  price_monthly: 79
+  currency: USD
+  period: month
+  audience: AEs working a full territory
+  api_access: true
+  api_quota:
+    calls_per_day: 50
+    format: JSON
+    includes_mcp: true
+  included:
+    tracked_companies: 500
+    ai_matched_leads_per_day: 10
+    deep_dives_per_day: 5
+    signal_streams: 18
+    csv_export_rows_per_run: 1000
+    support: Onboarding call
+    features:
+    - Engage (LinkedIn connection matching)
+    - SmartSend signal-grounded sequences
+    - FundzIQ daily brief
+    - Push-to-HubSpot
+- name: Strategic
+  price_annual_per_month: 99
+  price_monthly: 149
+  currency: USD
+  period: month
+  audience: Senior/strategic AEs, advisors, dealmakers, RIAs, PE/VC
+  api_access: true
+  api_quota:
+    calls_per_day: 500
+    format: JSON
+    includes_mcp: true
+  included:
+    tracked_companies: unlimited
+    ai_matched_leads_per_day: 25
+    deep_dives_per_day: unlimited
+    csv_export_rows_per_run: 10000
+    verified_mobile_reveals_per_month: 200
+    support: Dedicated AM
+    features:
+    - Real-time 8-K and exec alerts in Slack
+    - Predictive Intelligence
+    - Benefits intelligence (Form 5500 Schedule A, 56,586 brokers of record)
+    - UCC secured-lending signals
+    - Investor Intelligence (45,000+ investors, 13F holdings)
+    - Money in Motion
+    - Hiring Intel
+    - WARN Act layoff and office-expansion signals
+    - White-label briefs
+- name: Team / Enterprise
+  price_annual_per_month: null
+  price_monthly: null
+  currency: USD
+  period: null
+  audience: Teams
+  api_access: true
+  quoted: true
+  note: >-
+    Named on the site as custom-priced. NOT counted in plan_count because no price, quota or
+    inclusion list is published for it.
+adjacent_pricing:
+- name: Data Licensing
+  url: https://www.fundz.net/fundz-data-licensing
+  model: priced on API call volume, not per seat
+  published: true
+  tiers:
+  - {price_per_month: 149, api_calls_per_month: 5000, monitored_companies: 500}
+  - {price_per_month: 500, api_calls_per_month: 25000}
+  - {price_per_month: 1500, api_calls_per_month: 100000}
+  - {price_per_month: 3000, api_calls_per_month: 250000}
+  note: >-
+    Redistribution rights included at every tier. Captured from the provider's own llms.txt
+    (https://app.fundz.net/llms.txt), which publishes these figures; not re-verified against the
+    licensing page in this pass.
+- name: FundzWatch Developer (Free)
+  url: https://fundzwatch.ai/docs
+  price_per_month: 0
+  api_calls_per_month: 1000
+  card_required: false
+  note: Free developer tier on the /v1/watch/* surface only — see sandbox/fundz-sandbox.yml.
+evidence:
+- {url: 'https://fundz.net/pricing', status: 200}
+- {url: 'https://www.fundz.net/fundz-api', status: 200}
+- {url: 'https://fundzwatch.ai/docs', status: 200}
+notes:
+- >-
+  A prior pass recorded plans as "published but not enumerated". This pass parsed the page: the
+  three tiers, both billing periods, and the per-tier API quotas are all now structured data.
+- >-
+  The Pro price on the pricing page ($49 annual / $79 monthly) is the same product the
+  www.fundz.net/fundz-api page describes as "Pro — $79/mo" — that page quotes the monthly rate.

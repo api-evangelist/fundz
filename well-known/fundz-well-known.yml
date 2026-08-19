@@ -1,0 +1,66 @@
+generated: '2026-08-14'
+method: probed
+source: live GET of each /.well-known/ path on every Fundz host
+description: >-
+  Fundz serves no /.well-known/ discovery surface. Every canonical path was probed on all four
+  hosts the profile knows about and every one returned HTTP 404 with an HTML error page. This file
+  records the absence; NO WellKnown or SecurityTxt pointer is emitted in apis.yml, because there is
+  no document to point at.
+verified: '2026-08-14'
+result: none
+hosts:
+- host: https://api.fundz.net
+  note: API host from OpenAPI servers[0] and every apis[].baseURL. 404s are the nginx/Rails HTML error page.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://www.fundz.net
+  note: Marketing site.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://app.fundz.net
+  note: Application + knowledge base / API reference host.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://fundzwatch.ai
+  note: FundzWatch agent-facing product site and API documentation host.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+findings:
+- >-
+  No RFC 9116 security.txt on any host, so there is no machine-readable vulnerability-disclosure
+  contact. The probe-security-programs.py pass separately found no disclosure page and no bug
+  bounty program.
+- >-
+  No RFC 9727 api-catalog, so the two API surfaces Fundz runs on api.fundz.net (the feed endpoints
+  and the /v1/watch/* FundzWatch endpoints) are not discoverable from the host itself.
+- >-
+  No /.well-known/agent-card.json and no legacy /.well-known/agent.json on any host — no A2A agent
+  card exists for Fundz, so no a2a/ artifact was written.
+- >-
+  No OIDC or RFC 8414 metadata. Consistent with the auth model: a raw API key in the Authorization
+  header, plus a Bearer access token accepted for ChatGPT/agent integrations, with no advertised
+  authorization server.

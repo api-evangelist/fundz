@@ -1,0 +1,87 @@
+generated: '2026-08-14'
+method: searched
+source: https://app.fundz.net/knowledge/api-references/authentication, https://fundz.net/pricing, https://fundzwatch.ai/docs
+description: >-
+  Fundz publishes hard per-plan quotas for both of its API surfaces, and reports the remaining
+  allowance in the body of every successful response. What it does NOT do is signal limits in
+  response headers — there is no RateLimit-*, X-RateLimit-* or Retry-After header on any observed
+  response, so an agent must parse `meta.remaining_searches` out of the payload to pace itself.
+verified: '2026-08-14'
+limit_count: 5
+enforcement:
+  status_code: 429
+  retry_after_header: false
+  response_headers: []
+  headers_note: >-
+    PROBED 2026-08-14: GET https://api.fundz.net/fundings returned HTTP 403 with headers
+    content-type, server (nginx/1.4.6 Ubuntu), x-content-type-options, x-request-id, x-runtime —
+    and no rate-limit header of any kind. The runtime signal is in the body, not the headers.
+  body_signal:
+    on_success: '{ "meta": { "tier": "Pro", "remaining_searches": 97 } }'
+    on_exhaustion: '{ "error": "rate_limit_exceeded", "current_tier": "Pro", "queries_limit": 50, "remaining_searches": 0, "upgrade_url": "https://www.fundz.net/pricing" }'
+  free_queries: >-
+    A query that returns no results does not count against the quota; the response carries a
+    `guidance` object instead.
+  guidance: >-
+    The API reference tells integrators not to hardcode per-plan numbers and to read
+    meta.remaining_searches instead.
+limits:
+- id: core-api-starter
+  surface: https://api.fundz.net (feed + /companies/:id)
+  scope: per-account (plan tier)
+  plan: Starter
+  window: day
+  limit: 0
+  note: Starter has no API access at all — the pricing comparison lists API access as "Not included".
+  source: https://fundz.net/pricing
+- id: core-api-pro
+  surface: https://api.fundz.net (feed + /companies/:id)
+  scope: per-account (plan tier)
+  plan: Pro
+  window: day
+  limit: 50
+  burst: null
+  note: '"50 calls a day, JSON, documented" — included in the plan, not an add-on SKU.'
+  source: https://fundz.net/pricing
+- id: core-api-strategic
+  surface: https://api.fundz.net (feed + /companies/:id)
+  scope: per-account (plan tier)
+  plan: Strategic
+  window: day
+  limit: 500
+  burst: null
+  source: https://fundz.net/pricing
+- id: fundzwatch-developer
+  surface: https://api.fundz.net/v1/watch/*
+  scope: per-key
+  plan: Developer (Free)
+  window: month
+  limit: 1000
+  sub_limits:
+    ai_score_calls_per_month: 100
+    watchlist_companies: 50
+    webhooks: 1
+  source: https://fundzwatch.ai/docs
+- id: fundzwatch-data-licensing
+  surface: https://api.fundz.net/v1/watch/*
+  scope: per-contract
+  plan: Data Licensing
+  window: null
+  limit: null
+  unlimited: true
+  note: Docs list calls, AI score calls, watchlist and webhooks all as "Unlimited" under a data-licensing agreement.
+  source: https://fundzwatch.ai/docs
+pagination_interaction:
+  page_size: 25
+  note: >-
+    A day's allowance is counted in requests, not records — 50 requests/day on Pro is 1,250 feed
+    records/day at the fixed 25-per-page size, which is the practical ceiling an agent should plan
+    against.
+evidence:
+- {url: 'https://api.fundz.net/fundings', status: 403, note: 'live header probe — no rate-limit headers returned'}
+- {url: 'https://app.fundz.net/knowledge/api-references/authentication', status: 200}
+- {url: 'https://fundz.net/pricing', status: 200}
+- {url: 'https://fundzwatch.ai/docs', status: 200}
+gaps:
+- No Retry-After on 429 and no documented backoff guidance; a client must decide its own retry schedule.
+- The quota window for the core API ("daily") has no documented reset time or timezone.

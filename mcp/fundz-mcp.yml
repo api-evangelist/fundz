@@ -1,38 +1,130 @@
-generated: '2026-08-03'
+generated: '2026-08-14'
 method: searched
 status: published
 provider_published: true
-source: https://registry.modelcontextprotocol.io/v0/servers?search=fundz
-description: FundzWatch MCP server, listed on the OFFICIAL Model Context Protocol registry — not only
-  a third-party directory. Distributed as an npm package over stdio, so an agent runs it locally rather
-  than calling a hosted endpoint.
-verified: '2026-08-03'
+source: https://registry.modelcontextprotocol.io/v0/servers?search=fundz, https://github.com/Fund-z/fundzwatch-mcp, https://registry.npmjs.org/@fundzwatch/mcp-server
+description: >-
+  FundzWatch MCP server, listed on the OFFICIAL Model Context Protocol registry — not only a
+  third-party directory. It is distributed as an npm package over stdio: an agent operator installs
+  and runs it locally, there is no hosted endpoint an MCP client can POST to. 7 of its 14 tools
+  return live data with NO API key, which makes it the lowest-friction way to reach Fundz data.
+verified: '2026-08-14'
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: npx -y @fundzwatch/mcp-server
+  package: https://www.npmjs.com/package/@fundzwatch/mcp-server
+  auth: api-key
+  auth_note: >-
+    Optional. FUNDZWATCH_API_KEY environment variable; omit it entirely and the 7 key-less tools
+    still return live data. Free key, no credit card, at https://www.fundz.net/api-trial.
+  verified: searched
+  checked: '2026-08-14'
+  correction: >-
+    CORRECTED 2026-08-14. A prior pass recorded `mode: none` with `endpoint: https://fundzwatch.ai`
+    after probing that URL as an MCP endpoint and finding it dead. That was a mis-read: fundzwatch.ai
+    is the product WEBSITE (it returns 200 and serves the docs), and this server was never a remote
+    one. It is stdio-only and always has been — the official registry entry declares
+    transport.type "stdio" and ships only an npm package. `mode: none` is reserved for a derived
+    candidate with no server at all; this is a real, published, first-party server that happens to
+    be locally run. Re-probed 2026-08-14: https://fundzwatch.ai/mcp 404, https://api.fundz.net/mcp 404
+    — confirming there is no remote endpoint to record.
 server:
   name: io.github.Fund-z/fundzwatch
-  version: 1.2.2
+  registry_version: 1.2.2
+  npm_version: 1.2.3
+  npm_published: '2026-08-03'
   transport: stdio
-  deployment: self-run (npm)
   package: '@fundzwatch/mcp-server'
+  bin: fundzwatch-mcp
   repository: https://github.com/Fund-z/fundzwatch-mcp
   website: https://fundzwatch.ai
+  license: MIT
+  language: TypeScript
   description: 'Business-event intelligence for AI agents: funding, exec moves, UCC and benefit-plan signals.'
+  registry_status: active
+  registry_published_at: '2026-06-06'
+  version_note: >-
+    npm is one patch ahead of the official registry listing (1.2.3 vs 1.2.2) — the registry entry
+    has not been republished since 2026-06-06.
+client_config:
+  claude_desktop: |
+    {
+      "mcpServers": {
+        "fundzwatch": {
+          "command": "npx",
+          "args": ["-y", "@fundzwatch/mcp-server"],
+          "env": { "FUNDZWATCH_API_KEY": "REDACTED_EXAMPLE_KEY" }
+        }
+      }
+    }
+  note: The env block is optional. Same block for Cursor, Windsurf and Cline under their MCP settings.
+  smithery: npx -y @smithery/cli install @fundzwatch/mcp-server --client claude
+tools_count: 14
+tools_keyless: 7
+tools:
+- name: get_funded_and_hiring
+  auth: none
+  description: Companies funded in the last 12 months AND actively hiring — the strongest buying window, scored daily.
+- name: get_refinancing_windows
+  auth: none
+  description: Companies whose UCC-1 liens lapse within 12 months (Renewal Radar) — dated refinancing windows.
+- name: get_stacked_borrowers
+  auth: none
+  description: Companies with active secured debt from 2+ distinct lenders — second-position / consolidation targets.
+- name: get_benefit_plans_in_play
+  auth: none
+  description: 'Recently funded companies with a DOL Form 5500 plan: renewal timing, headcount-vs-plan gap, incumbent carrier.'
+- name: get_money_in_motion
+  auth: none
+  description: Companies with a recent exec move AND recent funding — the wealth-advisor "money in motion" moment.
+- name: get_lender_directory
+  auth: none
+  description: Directory of 8,600+ UCC secured parties ranked by filing volume, with lapsing-soon exposure.
+- name: get_broker_directory
+  auth: none
+  description: Directory of 65,000+ benefits brokers (Form 5500 Schedule A), ranked by filings carried, with commission volume.
+- name: get_scored_leads
+  auth: api-key
+  description: AI-scored sales leads matched to your ICP, with buyer intent, buying stage and recommended outreach.
+- name: get_events
+  auth: api-key
+  description: 'Real-time business events: funding, acquisitions, exec hires, government contracts, product launches.'
+- name: get_market_pulse
+  auth: api-key
+  description: Market activity overview — funding totals, acquisitions, exec moves, contracts, launches (7d / 30d).
+- name: get_market_brief
+  auth: api-key
+  description: Today's AI-generated strategic intelligence brief on the most important market movements.
+- name: manage_watchlist
+  auth: api-key
+  description: Add, remove or list tracked companies; tracked companies generate new-event alerts.
+- name: get_watchlist_events
+  auth: api-key
+  description: Recent events for the companies on your watchlist.
+- name: get_usage
+  auth: api-key
+  description: Check your API usage, limits and current tier.
+tools_source: https://github.com/Fund-z/fundzwatch-mcp (README tool tables)
+tools_schema_note: >-
+  Tool names and descriptions are verbatim from the provider's README. Input schemas were NOT
+  obtained: the server is stdio-only, so there is no hosted endpoint to POST tools/list at, and a
+  live schema read requires installing and running the package. Recorded as names+descriptions
+  rather than guessed inputSchemas. See mcp/fundz-tool-crosswalk.yml for the REST binding.
+listings:
+- {name: Official MCP Registry, url: 'https://registry.modelcontextprotocol.io/v0/servers?search=fundz', status: 200}
+- {name: npm, url: 'https://www.npmjs.com/package/@fundzwatch/mcp-server', status: 200}
+- {name: Smithery, url: 'https://smithery.ai/servers/fundzwatch/fundzwatch-mcp', status: 200}
+- {name: Glama, url: 'https://glama.ai/mcp/servers/Fund-z/fundzwatch-mcp', status: unverified}
+- {name: Cline Marketplace, url: 'https://cline.bot', status: 'submitted (per provider README)'}
 evidence:
-- url: https://registry.modelcontextprotocol.io/v0/servers?search=fundz
-  status: 200
-  note: official MCP registry, 1 result
-- url: https://github.com/Fund-z/fundzwatch-mcp
-  status: 200
-- url: https://smithery.ai/servers/fundzwatch/fundzwatch-mcp
-  status: 200
-  note: also listed on Smithery
+- {url: 'https://registry.modelcontextprotocol.io/v0/servers?search=fundz', status: 200, note: 'official MCP registry, 1 result, transport stdio, npm @fundzwatch/mcp-server'}
+- {url: 'https://github.com/Fund-z/fundzwatch-mcp', status: 200}
+- {url: 'https://registry.npmjs.org/@fundzwatch/mcp-server', status: 200, note: 'latest 1.2.3, published 2026-08-03'}
+- {url: 'https://fundzwatch.ai/mcp', status: 404}
+- {url: 'https://api.fundz.net/mcp', status: 404}
 gaps:
-- stdio transport, so there is no hosted endpoint to probe for a live tools/list.
-deployment:
-  mode: none
-  endpoint: https://fundzwatch.ai
-  verified: probed
-  probe: dead
-  note: the endpoint this manifest claimed did not answer; recorded as none rather than deleted so the
-    claim stays auditable
-  checked: '2026-08-12'
-  source: catalog MCP census
+- No hosted/remote MCP endpoint — an agent cannot reach Fundz over MCP without a human first installing the package.
+- No live tools/list capture, so tool input schemas are undocumented in this catalog.
+- The MCP server exposes the FundzWatch dataset, which is not the same surface as the core Fundz OpenAPI.
+raw: mcp/fundz-mcp-registry.json

@@ -1,0 +1,170 @@
+generated: '2026-08-14'
+method: derived
+source: mcp/fundz-mcp.yml, openapi/_original/fundz-openapi.json, https://fundzwatch.ai/docs
+description: >-
+  Binding between the 14 FundzWatch MCP tools and the machine-readable REST contract. The headline
+  finding is a SURFACE SPLIT: the MCP server does not front the OpenAPI. It fronts the FundzWatch
+  API (api.fundz.net/v1/watch/*), which has documented endpoints but NO OpenAPI, while the six
+  operations that DO have an OpenAPI (the /fundings-style feeds) have no MCP tool of their own.
+  Only one tool — get_events — overlaps the spec'd surface, and even then by semantics rather than
+  by a shared operationId. Every crosswalk row below is therefore honestly graded low or medium
+  confidence; nothing here was upgraded to make the coverage look better than it is.
+verified: '2026-08-14'
+surfaces:
+  openapi:
+    file: openapi/_original/fundz-openapi.json
+    refined: openapi/fundz-*-api-openapi.yml (6 per-tag documents)
+    base: https://api.fundz.net
+    operations: 6
+    gated: false
+    note: >-
+      Public spec at https://raw.githubusercontent.com/Fund-z/fundz-api-spec/main/openapi.json.
+      Calling the API needs a paid-plan key; reading the contract does not.
+  rest_documented_not_specd:
+    base: https://api.fundz.net/v1/watch
+    docs: https://fundzwatch.ai/docs
+    operations: 11
+    in_openapi: false
+    note: >-
+      Fully documented in prose with paths, methods and parameters — but absent from the OpenAPI,
+      so an agent cannot bind these tools to a machine-readable input contract.
+  graphql:
+    endpoint: null
+    note: Fundz publishes no GraphQL surface.
+  mcp:
+    server: '@fundzwatch/mcp-server'
+    transport: stdio
+    endpoint: null
+    gated: >-
+      Not auth-gated but not remotely reachable — stdio-only, so tools/list cannot be probed
+      without installing and running the package. Tool inputSchemas are therefore unrecorded.
+crosswalk:
+- tool: get_events
+  category: events
+  rest: [listFundings, listAcquisitions, listExecutiveAppointments, listProductLaunches]
+  rest_documented: [GET /v1/watch/events]
+  binding: rest
+  confidence: medium
+  note: >-
+    The only tool whose capability is genuinely present in the OpenAPI. Its documented backing call
+    is GET /v1/watch/events (types, days, limit, offset, industries, locations), which fans in
+    across the same event classes the four spec'd feed operations expose separately. Different
+    endpoint, different parameter names, overlapping data — mapped by semantics, not by shared id.
+- tool: get_market_pulse
+  category: aggregate
+  rest: []
+  rest_documented: [GET /v1/watch/market/pulse]
+  binding: documented-rest
+  confidence: high
+  note: 1:1 with a documented endpoint that is not in the OpenAPI. Pre-computed nightly aggregate; no spec'd equivalent.
+- tool: get_market_brief
+  category: aggregate
+  rest: []
+  rest_documented: [GET /v1/watch/market/brief]
+  binding: documented-rest
+  confidence: high
+- tool: get_scored_leads
+  category: scoring
+  rest: []
+  rest_documented: [POST /v1/watch/signals]
+  binding: documented-rest
+  confidence: high
+  note: >-
+    The Python SDK maps get_leads() -> POST /v1/watch/signals (min_score, max_results,
+    buying_stages, industries), which is the same capability under a different tool name.
+- tool: manage_watchlist
+  category: watchlist
+  rest: []
+  rest_documented: [GET /v1/watch/watchlist, POST /v1/watch/watchlist, DELETE /v1/watch/watchlist]
+  binding: documented-rest
+  confidence: high
+  note: >-
+    One tool fanning out to three REST verbs. The only WRITE capability anywhere in the Fundz tool
+    surface — worth flagging for agent-access policy, because everything else is read-only.
+- tool: get_watchlist_events
+  category: watchlist
+  rest: []
+  rest_documented: [GET /v1/watch/watchlist/events]
+  binding: documented-rest
+  confidence: high
+- tool: get_usage
+  category: metering
+  rest: []
+  rest_documented: [GET /v1/watch/usage]
+  binding: documented-rest
+  confidence: high
+  note: >-
+    The agent-facing equivalent of `meta.remaining_searches` on the core API. An agent pacing
+    itself against quota should call this rather than parse envelopes.
+mcp_only:
+- tool: get_funded_and_hiring
+  reason: >-
+    Cross-dataset cohort — funding events joined to live job postings. No public REST endpoint and
+    no OpenAPI operation; the join is computed server-side and re-scored daily. The nearest public
+    equivalent is the free HTML page https://www.fundz.net/funded-and-hiring.
+- tool: get_refinancing_windows
+  reason: >-
+    Built on state UCC-1 lien data (California and Colorado coverage per the README). UCC data does
+    not appear in the OpenAPI or in any documented REST endpoint.
+- tool: get_stacked_borrowers
+  reason: UCC secured-debt analysis across multiple lenders. Same dataset gap as above.
+- tool: get_benefit_plans_in_play
+  reason: DOL Form 5500 benefit-plan data joined to funding. Form 5500 is absent from the REST contract entirely.
+- tool: get_money_in_motion
+  reason: >-
+    Composite of an executive-move event and a funding event on the same company. Both inputs exist
+    in the OpenAPI (listExecutiveAppointments, listFundings) but the JOIN does not — a client would
+    have to reproduce it by paging two feeds and correlating on organization.id.
+- tool: get_lender_directory
+  reason: Aggregated UCC secured-party directory (8,600+). Derived dataset, no REST endpoint.
+- tool: get_broker_directory
+  reason: Aggregated Form 5500 Schedule A broker directory (65,000+). Derived dataset, no REST endpoint.
+rest_only:
+- capability: Crowdfunding campaigns
+  operations: [listCrowdfundings]
+  note: SEC Form C / Form 1-A campaigns. No MCP tool exposes crowdfunding at all.
+- capability: Business agreements and partnerships
+  operations: [listAgreements]
+  note: No MCP tool. The MCP event_types list (funding, acquisition, hiring, contract, product_launch) has no agreement class.
+- capability: Fine-grained event filtering
+  operations: [listFundings, listAcquisitions, listExecutiveAppointments, listProductLaunches, listCrowdfundings, listAgreements]
+  note: >-
+    The REST feeds accept money_raised_min/max, number_of_employees_min/max, series, offered_types,
+    investors, locations, industries, keywords and created_from/created_to. get_events documents
+    only types, days, limit, offset, industries and locations — an agent doing amount- or
+    investor-filtered work must drop to REST.
+- capability: Fused company profile
+  operations: []
+  documented: ['GET /companies/{id}']
+  note: >-
+    The provider's own marquee endpoint — one call returning a company plus every signal type — has
+    neither an MCP tool nor an OpenAPI operation. Documented in prose only.
+- capability: SEC fund formations
+  operations: []
+  documented: [GET /fund-formations]
+  note: 100,000+ Form D filings. Documented in prose only; no MCP tool, not in the OpenAPI.
+coverage:
+  tools_named: 14
+  tools_bound_to_openapi: 1
+  tools_bound_to_documented_rest: 6
+  mcp_only: 7
+  rest_ops_total: 6
+  rest_ops_with_a_tool: 4
+  rest_ops_with_a_dedicated_tool: 0
+  documented_rest_ops_not_in_openapi: 11
+findings:
+- >-
+  MCP and OpenAPI describe two different products at Fundz. The MCP server is the front door to
+  FundzWatch (cohorts, scoring, UCC, Form 5500); the OpenAPI is the contract for the Fundz event
+  feeds. Neither is a superset and no document maps between them — this file is that map.
+- >-
+  Seven of the fourteen tools are cross-dataset joins with no REST equivalent. That is a real
+  capability divergence, not a documentation gap: an agent gets things over MCP it cannot get
+  over the API at any price tier.
+- >-
+  Conversely, the richest filtering in the whole Fundz surface lives only in REST, and the two
+  most-marketed endpoints (/companies/:id, /fund-formations) are in neither the OpenAPI nor MCP.
+- >-
+  The single highest-value fix for the provider is publishing the /v1/watch/* surface and the two
+  prose-only endpoints as OpenAPI. That would take tools_bound_to_openapi from 1 to 13 and give
+  every MCP tool a real inputSchema.

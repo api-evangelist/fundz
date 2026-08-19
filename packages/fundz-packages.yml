@@ -1,0 +1,73 @@
+generated: '2026-08-14'
+method: searched
+source: https://registry.npmjs.org/@fundzwatch/mcp-server, https://pypi.org/pypi/fundzwatch/json, https://github.com/orgs/Fund-z/repositories
+description: >-
+  Fundz publishes two first-party client libraries, both under the Fund-z GitHub organization — the
+  same org that publishes the fundz-api-spec OpenAPI and the fundzwatch-mcp server. Both wrap the
+  FundzWatch agent surface (api.fundz.net/v1/watch/*) rather than the core Fundz feed endpoints
+  (/fundings, /acquisitions, ...), which have no published SDK — a call-it-with-curl REST API.
+verified: '2026-08-14'
+packages:
+- language: javascript
+  registry: npm
+  name: '@fundzwatch/mcp-server'
+  url: https://www.npmjs.com/package/@fundzwatch/mcp-server
+  install: npx -y @fundzwatch/mcp-server
+  official: true
+  version: 1.2.3
+  published: '2026-08-03'
+  repository: https://github.com/Fund-z/fundzwatch-mcp
+  license: MIT
+  kind: mcp-server
+  note: >-
+    Model Context Protocol server, stdio transport, 14 tools (7 of which run with no API key).
+    Registry metadata read from registry.npmjs.org; dist-tags.latest 1.2.3, time[1.2.3]
+    2026-08-03T21:12:03Z. Note the official MCP registry entry still pins 1.2.2 — npm is one
+    patch ahead of the registry listing.
+- language: python
+  registry: pypi
+  name: fundzwatch
+  url: https://pypi.org/project/fundzwatch/
+  install: pip install fundzwatch
+  official: true
+  version: 1.0.2
+  published: '2026-03-24'
+  repository: https://github.com/Fund-z/fundzwatch-python
+  license: MIT
+  kind: sdk
+  extras:
+  - fundzwatch[crewai]
+  - fundzwatch[langchain]
+  - fundzwatch[all]
+  note: >-
+    First-party — PyPI author metadata reads "Fundz Inc." <support@fundz.net> and the project
+    Repository URL is the Fund-z GitHub org. Ships CrewAI and LangChain tool adapters alongside
+    the plain client. Last release 2026-03-24, roughly five months behind the npm MCP server and
+    behind the 2026-08 revision of the api.fundz.net surface it wraps.
+related_repositories:
+- url: https://github.com/Fund-z/fundzwatch-ai-sdr
+  language: python
+  description: Open-source AI SDR agent built on the FundzWatch API. Reference application, not a client library.
+  registry: null
+  version: null
+  published: null
+  note: Not published to any package registry — GitHub source only, so there is no registry metadata endpoint to date it.
+registries_checked:
+- registry: npm
+  result: '@fundzwatch/mcp-server found; npm registry search for "fundz" returned no other first-party package'
+- registry: pypi
+  result: fundzwatch found (200); fundz 404, fundz-api 404
+- registry: rubygems
+  result: not checked — no Ruby client referenced in any Fundz doc or repo
+- registry: crates.io
+  result: not checked — no Rust client referenced in any Fundz doc or repo
+- registry: maven-central
+  result: not checked — no JVM client referenced in any Fundz doc or repo
+- registry: nuget
+  result: not checked — no .NET client referenced in any Fundz doc or repo
+- registry: pkg.go.dev
+  result: not checked — no Go client referenced in any Fundz doc or repo
+gaps:
+- The core Fundz API (GET /fundings, /acquisitions, /crowdfundings, /executives, /agreements, /products,
+  /companies/:id, /fund-formations) has no first-party SDK in any language. The published examples are
+  curl and raw `requests`.

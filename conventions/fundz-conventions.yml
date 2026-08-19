@@ -1,0 +1,118 @@
+generated: '2026-08-14'
+method: searched
+source: https://app.fundz.net/knowledge/api-references/authentication, https://app.fundz.net/knowledge/api-references/models, openapi/_original/fundz-openapi.json
+description: >-
+  Cross-cutting request/response semantics for the Fundz API. Every published operation is a GET
+  over a read-only event feed, which shapes the whole convention set: there is a consistent
+  response envelope, page-number pagination, quota metadata on every success, and NO idempotency
+  contract — because there is nothing to make idempotent.
+verified: '2026-08-14'
+authentication:
+  style: api-key-raw-header
+  header: Authorization
+  bearer_prefix: false
+  note: >-
+    The key is the raw value of the Authorization header — no `Bearer` prefix. The API additionally
+    accepts `Authorization: Bearer <access_token>` for ChatGPT/agent OAuth integrations, and an
+    in-app session cookie for browser use.
+  artifact: authentication/fundz-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No idempotency contract, and none is needed on the published surface: all six documented
+    operations (listFundings, listCrowdfundings, listAcquisitions, listExecutiveAppointments,
+    listAgreements, listProductLaunches) plus GET /companies/:id and GET /fund-formations are
+    GETs, which are idempotent by HTTP semantics. The FundzWatch surface does expose non-idempotent
+    writes (POST/DELETE /v1/watch/watchlist, POST /v1/watch/webhooks) and documents no
+    idempotency key for them. NO `Idempotency` pointer is emitted in apis.yml — there is no
+    idempotency support to claim.
+pagination:
+  style: page-number
+  params:
+  - {name: page, in: query, type: integer, default: 1, description: '1-based page number.'}
+  - {name: per_page, in: query, type: integer, default: 25, max: 100, description: 'Documented on /fund-formations; the feed endpoints are fixed at 25.'}
+  page_size: 25
+  response_fields:
+  - meta.current_page
+  - meta.next_page
+  - meta.total_count
+  - meta.total_pages
+  cursor: false
+  sort: newest-first by created_at
+  incremental_pattern: >-
+    Poll `created_from` against `created_at` to consume the feed incrementally — the idiomatic
+    consumption pattern named in the spec description.
+envelope:
+  shape: '{ _attribution, _licensing, data[], meta, upgrade_url }'
+  data_field: data
+  meta_field: meta
+  fields:
+  - {name: _attribution, description: 'Attribution string that must be displayed — "Data provided by Fundz — https://fundz.net".'}
+  - {name: _licensing, description: 'Licensing notice — commercial use, redistribution or embedding requires a licence (john@fundz.net).'}
+  - {name: upgrade_url, description: 'https://www.fundz.net/pricing — returned on success as well as on 429.'}
+  empty_result_behavior: >-
+    A query matching nothing returns a `guidance` object with a message and suggestions, and that
+    query does NOT count against the caller's quota.
+quota_signaling:
+  in_body: true
+  in_headers: false
+  fields:
+  - {name: meta.tier, description: 'The plan attached to the calling key, e.g. Starter, Pro, Strategic.'}
+  - {name: meta.remaining_searches, description: 'Requests left in the current quota window.'}
+  exhausted_status: 429
+  note: >-
+    The docs explicitly instruct callers not to hardcode per-plan numbers and to read
+    meta.remaining_searches instead. No RateLimit-* or X-RateLimit-* response headers are sent —
+    verified on a live unauthenticated request to https://api.fundz.net/fundings.
+  artifact: rate-limits/fundz-rate-limits.yml
+request_tracing:
+  header: x-request-id
+  direction: response
+  observed: true
+  note: >-
+    Observed on a live response from https://api.fundz.net/fundings (2026-08-14), e.g.
+    x-request-id: 5ba1346e-...; an `x-runtime` timing header is also returned. Neither is
+    documented in the API reference, so treat them as observed behaviour rather than contract.
+field_expansion:
+  supported: false
+  note: >-
+    No sparse fieldsets or `expand` parameter. Expansion is fixed and generous instead: the
+    /fundings feed serializes an enriched organization (description, linkedin_url, founded,
+    domain) on top of the base organization shape, and GET /companies/:id fuses every signal type
+    into a single response by design.
+metadata:
+  user_defined: false
+  note: Read-only feed; there is no customer-writable metadata surface.
+versioning:
+  scheme: none-on-core
+  current: null
+  note: >-
+    The core feed endpoints are unversioned (https://api.fundz.net/fundings). The FundzWatch
+    surface on the same host is path-versioned at /v1/ (https://api.fundz.net/v1/watch/events) and
+    labelled "v1 STABLE" in its docs. The OpenAPI document carries info.version 1.1.0.
+  artifact: lifecycle/fundz-lifecycle.yml
+errors:
+  envelope: '{ type, message }'
+  problem_json: false
+  note: >-
+    403 and 404 return `{type, message}`. 429 returns a DIFFERENT shape —
+    `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. The spec states
+    outright that the API does not emit RFC 9457 Problem Details.
+  artifact: errors/fundz-problem-types.yml
+filtering:
+  style: repeated-or-comma-separated query params
+  note: >-
+    The OpenAPI models array filters (keywords, series, locations, industries, investors,
+    offered_types) as `type: array`; the knowledge-base reference documents the same filters as
+    comma-separated strings. Both forms are described by the provider; the array form is the
+    machine-readable contract.
+  shared_filters:
+  - created_from
+  - created_to
+  - keywords
+  - locations
+  - industries
+  - page

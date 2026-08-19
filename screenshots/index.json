@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "fundz",
+    "captured_at": "2026-08-17T123449",
+    "source_url": "https://www.fundz.net/fundz-api",
+    "source_type": "DeveloperPortal",
+    "file": "fundz-2026-08-17T123449.png",
+    "bytes": 143837,
+    "capture": "playwright-local"
+  }
+]

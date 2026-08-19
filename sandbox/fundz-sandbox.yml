@@ -1,0 +1,62 @@
+generated: '2026-08-14'
+method: searched
+source: https://fundzwatch.ai/docs
+description: >-
+  Fundz separates test from live at the API-key level on the FundzWatch surface: keys are prefixed
+  `fundz_test_` or `fundz_live_`, and a test key runs against LIVE data at developer-tier limits
+  rather than against a fixture set. There is no separate sandbox host, no mock data, no test
+  clock and no fixture/trigger tooling — the "sandbox" is a free quota on production data. The
+  core Fundz feed API (/fundings, /acquisitions, ...) publishes no test mode at all.
+verified: '2026-08-14'
+status: partial
+key_prefixes:
+- prefix: fundz_test_
+  mode: test
+  description: >-
+    Developer/test key. Works against live data with developer-tier limits. Issued from the
+    FundzWatch onboarding flow with no credit card.
+  source: https://fundzwatch.ai/docs
+- prefix: fundz_live_
+  mode: live
+  description: Production key, available on paid Fundz plans.
+  source: https://fundzwatch.ai/docs
+free_tier:
+  name: Developer (Free)
+  host: https://api.fundz.net
+  surface: /v1/watch/*
+  signup: https://fundzwatch.ai/onboarding
+  card_required: false
+  limits:
+    api_calls_per_month: 1000
+    ai_score_calls_per_month: 100
+    watchlist_companies: 50
+    webhooks: 1
+  note: >-
+    This is the closest thing Fundz has to a sandbox — a free key against production data, not an
+    isolated environment.
+keyless_surface:
+  transport: mcp
+  server: '@fundzwatch/mcp-server'
+  description: >-
+    7 of the 14 MCP tools return live data with NO API key at all (get_funded_and_hiring,
+    get_refinancing_windows, get_stacked_borrowers, get_benefit_plans_in_play, get_money_in_motion,
+    get_lender_directory, get_broker_directory). For an agent this is the lowest-friction way to
+    evaluate Fundz data before any credential exists.
+  source: https://github.com/Fund-z/fundzwatch-mcp
+core_api:
+  surface: https://api.fundz.net (feed + company endpoints)
+  test_mode: false
+  note: >-
+    The core Fundz API documents no test mode and no test credentials. The API reference states
+    plainly "The Fundz API is available on paid plans only — there is no free API tier"; an
+    inactive subscription returns 401 pointing at fundz.net/pricing.
+  source: https://app.fundz.net/knowledge/api-references/authentication
+not_published:
+- test_clocks / time simulation
+- fixture or event-trigger tooling
+- magic test identifiers (test company slugs, seeded funding events)
+- a separate sandbox hostname
+evidence:
+- {url: 'https://fundzwatch.ai/docs', status: 200}
+- {url: 'https://app.fundz.net/knowledge/api-references/authentication', status: 200}
+- {url: 'https://github.com/Fund-z/fundzwatch-mcp', status: 200}

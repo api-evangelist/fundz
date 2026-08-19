@@ -1,0 +1,146 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/_original/fundz-openapi.json, https://app.fundz.net/knowledge/api-references/models
+description: >-
+  Entity graph for the Fundz API, derived from OpenAPI $ref links and id-reference fields, and
+  enriched from the published Data Models reference. The model is a star: one Organization entity
+  at the centre, six event entities that each hang off it, and a shared page envelope. Everything
+  is read-only.
+verified: '2026-08-14'
+shape: event-star
+core_entity: Organization
+entities:
+- name: Organization
+  schema: '#/components/schemas/Organization'
+  id_field: id
+  id_type: string-slug
+  id_example: onelayer
+  id_note: >-
+    Stable slug, documented as safe to use as a deduplication key. GET /companies/{id} accepts
+    either the slug or the underlying numeric database id and resolves both to the same company.
+  fields: [description, domain, founded, id, industries, is_public_company, linkedin_url, list_badges, location, name, number_of_employees, status_code, status_label, ticker]
+  note: >-
+    The feed endpoints serialize a base Organization; /fundings serializes an enriched view adding
+    description, linkedin_url, founded and domain on top of the base set.
+- name: Domain
+  schema: 'inline — Organization.domain'
+  id_field: id
+  id_type: integer
+  fields: [id, description, logo, name, url, website]
+  note: The company web domain, resolved and verified. Nested, not separately addressable.
+- name: Location
+  schema: 'inline — Organization.location'
+  id_field: id
+  id_type: integer
+  fields: [id, title, short_description, country]
+- name: Industry
+  schema: 'inline — Organization.industries[]'
+  id_field: id
+  id_type: integer
+  fields: [id, title]
+- name: ListBadge
+  schema: 'inline — Organization.list_badges[]'
+  id_field: null
+  fields: [list_name, list_year, rank, label]
+  note: Curation-list membership, e.g. Inc 5000 or Forbes Cloud 100.
+- name: Investor
+  schema: 'inline — Funding.investors[]'
+  id_field: id
+  id_type: integer
+  fields: [id, title]
+  note: Linked to the Fundz investor graph — the spec cites 45,855 investors, the pricing page 45,000+.
+- name: Funding
+  schema: '#/components/schemas/Funding'
+  operation: listFundings
+  path: GET /fundings
+  id_field: id
+  id_type: string-slug
+  id_example: onelayer-funding-round-series-a-4b2c1a
+  fields: [created_at, id, investors, money_raised, organization, series, source_url, title, use_of_proceeds]
+- name: Crowdfunding
+  schema: '#/components/schemas/Crowdfunding'
+  operation: listCrowdfundings
+  path: GET /crowdfundings
+  id_field: id
+  fields: [city, created_at, deadline_date, filing, financials, id, issuer_contact_name, issuer_name, issuer_organization, issuer_phone, issuer_website, jurisdictions, offering_amount, offerred_type, portal, portal_url, sec_url, state, street1, street2, tier, title, zip_code]
+  note: >-
+    The one event entity that does NOT $ref Organization — it carries the issuer inline
+    (issuer_name, issuer_organization, issuer_website) because it is sourced from SEC Form C and
+    Form 1-A filings where the filer may not resolve to a tracked company. Note the misspelled
+    field `offerred_type` in the published contract.
+- name: Acquisition
+  schema: '#/components/schemas/Acquisition'
+  operation: listAcquisitions
+  path: GET /acquisitions
+  id_field: id
+  fields: [acquirees, acquirers, created_at, id, title]
+  note: >-
+    Also does not $ref Organization — it carries acquirers[] and acquirees[] arrays instead, so an
+    M&A event is a many-to-many between organizations rather than a single-company event.
+- name: ExecutiveAppointment
+  schema: '#/components/schemas/ExecutiveAppointment'
+  operation: listExecutiveAppointments
+  path: GET /executives
+  id_field: id
+  fields: [created_at, id, organization, related_contacts, title]
+- name: Agreement
+  schema: '#/components/schemas/Agreement'
+  operation: listAgreements
+  path: GET /agreements
+  id_field: id
+  fields: [created_at, id, kind, money_raised, organization, title]
+- name: ProductLaunch
+  schema: '#/components/schemas/ProductLaunch'
+  operation: listProductLaunches
+  path: GET /products
+  id_field: id
+  fields: [created_at, id, organization, title]
+- name: Meta
+  schema: '#/components/schemas/Meta'
+  kind: envelope
+  fields: [current_page, next_page, total_count, total_pages, tier, remaining_searches]
+- name: '*Page'
+  schema: 'FundingPage, CrowdfundingPage, AcquisitionPage, ExecutiveAppointmentPage, AgreementPage, ProductLaunchPage'
+  kind: envelope
+  fields: [_attribution, _licensing, data, meta, upgrade_url]
+  note: Six near-identical page schemas, one per feed. The only variation is the element type of data[].
+relationships:
+- {from: Funding, to: Organization, kind: has_one, via: organization, binding: '$ref'}
+- {from: Funding, to: Investor, kind: has_many, via: investors, binding: inline}
+- {from: ExecutiveAppointment, to: Organization, kind: has_one, via: organization, binding: '$ref'}
+- {from: ExecutiveAppointment, to: Contact, kind: has_many, via: related_contacts, binding: inline}
+- {from: Agreement, to: Organization, kind: has_one, via: organization, binding: '$ref'}
+- {from: ProductLaunch, to: Organization, kind: has_one, via: organization, binding: '$ref'}
+- {from: Acquisition, to: Organization, kind: has_many, via: acquirers, binding: 'inline (name only)'}
+- {from: Acquisition, to: Organization, kind: has_many, via: acquirees, binding: 'inline (name only)'}
+- {from: Crowdfunding, to: Organization, kind: belongs_to, via: issuer_organization, binding: 'inline (name only)'}
+- {from: Organization, to: Domain, kind: has_one, via: domain, binding: inline}
+- {from: Organization, to: Location, kind: has_one, via: location, binding: inline}
+- {from: Organization, to: Industry, kind: has_many, via: industries, binding: inline}
+- {from: Organization, to: ListBadge, kind: has_many, via: list_badges, binding: inline}
+- {from: FundingPage, to: Funding, kind: has_many, via: data, binding: '$ref'}
+- {from: FundingPage, to: Meta, kind: has_one, via: meta, binding: '$ref'}
+fusion_endpoint:
+  path: GET /companies/{id}
+  documented_at: https://app.fundz.net/knowledge/api-references/companies
+  in_openapi: false
+  description: >-
+    The inverse of the feed model: one call returns an Organization plus a `signals` object
+    grouping the latest events of each type (fundings, acquisitions, executives, agreements,
+    product_launches, sec_filings, expansions), a `counts` summary, and `last_signal_at`. This is
+    the entity-centric read; the six feeds are the event-centric read.
+  gap: >-
+    NOT declared in the published OpenAPI, which documents only the six feed paths. The same is
+    true of GET /fund-formations. Two of the API's most-marketed endpoints are outside the
+    machine-readable contract.
+external_identifiers:
+- {field: source_url, entity: Funding, description: 'Public source the event was extracted from — press release, filing or announcement.'}
+- {field: sec_url, entity: Crowdfunding, description: sec.gov URL for the underlying Form C / Form 1-A filing.}
+- {field: linkedin_url, entity: Organization}
+- {field: ticker, entity: Organization, description: Stock ticker for public companies.}
+- {field: domain.name, entity: Organization, description: 'Bare domain host — the de-facto join key against other datasets.'}
+temporal_key:
+  field: created_at
+  description: >-
+    When Fundz published the event, UTC. The documented field to poll on, and the sort key —
+    every feed is newest-first. `created_from`/`created_to` filter against it.

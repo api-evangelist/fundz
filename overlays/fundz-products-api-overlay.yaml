@@ -1,0 +1,62 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Fundz Products API
+  version: 1.0.0
+extends: openapi/fundz-products-api-openapi.yml
+x-provenance:
+  generated: '2026-08-14'
+  method: generated
+  source: >-
+    Derived from artifacts in this repository (conventions/, errors/, rate-limits/,
+    authentication/, lifecycle/, data-model/, mcp/). The original specification is
+    published by the provider at https://github.com/Fund-z/fundz-api-spec and is never
+    mutated — these actions record what API Evangelist established about it.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-artifacts:
+      conventions: conventions/fundz-conventions.yml
+      errors: errors/fundz-problem-types.yml
+      rate_limits: rate-limits/fundz-rate-limits.yml
+      authentication: authentication/fundz-authentication.yml
+      lifecycle: lifecycle/fundz-lifecycle.yml
+      data_model: data-model/fundz-data-model.yml
+      plans: plans/fundz-plans-pricing.yml
+      conformance: conformance/fundz-conformance.yml
+    x-apievangelist-access:
+      free_tier: false
+      note: >-
+        Paid plans only on this surface — Pro (50 calls/day) or Strategic (500 calls/day).
+        The free instant key belongs to the FundzWatch surface, not to these endpoints.
+- target: $.components.securitySchemes.apiKey
+  update:
+    x-apievangelist-auth:
+      bearer_prefix: false
+      also_accepts: Authorization Bearer <access_token> for ChatGPT/agent integrations (documented, not specified)
+      authorization_server_metadata: none (/.well-known/oauth-authorization-server 404)
+      hsts_on_api_host: false
+- target: $.components.schemas.Meta
+  update:
+    x-apievangelist-runtime-signal:
+      quota_in_headers: false
+      quota_in_body: [meta.remaining_searches, meta.tier]
+      note: >-
+        Probed 2026-08-14 — no RateLimit-*, X-RateLimit-* or Retry-After header on any
+        response from api.fundz.net. The envelope is the only runtime pacing signal.
+- target: $.paths['/products'].get
+  update:
+    x-apievangelist-operation:
+      idempotent: true
+      idempotency_key: null
+      idempotency_note: GET — idempotent by HTTP semantics; the API publishes no idempotency key.
+      pagination: {style: page-number, param: page, page_size: 25, next: meta.next_page}
+      incremental_poll: created_from against created_at, newest-first
+      dedupe_key: data[].id (stable slug, provider-documented as safe)
+      error_envelopes: {'403': '{type,message}', '404': '{type,message}', '429': '{error,current_tier,queries_limit,remaining_searches,upgrade_url}'}
+      undeclared_statuses: [400, 401, 422]
+      undeclared_note: >-
+        Documented at https://app.fundz.net/knowledge/api-references/authentication but not
+        declared in the specification.
+      attribution_required: true
+      mcp_tool: null
+      mcp_note: No FundzWatch MCP tool binds to this operation — see mcp/fundz-tool-crosswalk.yml.

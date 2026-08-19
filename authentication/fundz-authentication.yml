@@ -1,24 +1,118 @@
-generated: '2026-08-03'
+generated: '2026-08-14'
 method: searched
 status: published
-source: https://app.fundz.net/knowledge/api-references/companies
-description: API key passed in the Authorization header. A free key is issued instantly,
-  with no card and no sales call.
-verified: '2026-08-03'
+source: https://app.fundz.net/knowledge/api-references/authentication, https://fundzwatch.ai/docs, openapi/_original/fundz-openapi.json
+description: >-
+  Fundz runs two authenticated surfaces on one host. The core feed API takes the API key as the
+  RAW value of the Authorization header — no `Bearer` prefix — and is paid-plans-only. The
+  FundzWatch surface at /v1/watch/* takes a prefixed key (fundz_test_ / fundz_live_) as a Bearer
+  token and has a free developer tier. Both are api-key models; neither publishes an OAuth
+  authorization server, despite the core docs saying a Bearer access token is accepted for
+  ChatGPT/agent integrations.
+verified: '2026-08-14'
+summary:
+  types: [apiKey, http-bearer]
+  api_key_in: [header]
+  oauth2_flows: []
+  mtls: false
+  openid_connect: false
 schemes:
-- id: ApiKey
+- id: apiKey
+  surface: core
   type: apiKey
   in: header
   name: Authorization
+  bearer_prefix: false
+  source: openapi/_original/fundz-openapi.json#/components/securitySchemes/apiKey
+  applied: globally via root security[] on all six operations
   example: 'curl -H "Authorization: YOUR_API_KEY" https://api.fundz.net/companies/onelayer'
-trial:
-  url: https://fundz.net/api-trial
-  instant: true
-  card_required: false
-  note: Free instant key — the differentiator the founder leads with against Crunchbase,
-    whose Basic API was retired.
+  description: >-
+    The key is the raw header value. The spec is emphatic about this — "no `Bearer` prefix" — which
+    is worth honouring, because it is the opposite of the FundzWatch surface on the same host.
+- id: oauthBearer
+  surface: core
+  type: http
+  scheme: bearer
+  in: header
+  name: Authorization
+  source: https://app.fundz.net/knowledge/api-references/authentication
+  in_openapi: false
+  description: >-
+    "For ChatGPT and other agent integrations, the API also accepts an OAuth access token using the
+    Bearer scheme: Authorization: Bearer <access_token>." No authorization endpoint, token
+    endpoint, client registration or scope list is published, and
+    /.well-known/oauth-authorization-server 404s on every host — so this is an accepted credential
+    format rather than a documented OAuth 2.0 deployment. No scopes/ artifact was written for
+    exactly this reason.
+- id: sessionCookie
+  surface: in-app browser
+  type: cookie
+  source: https://app.fundz.net/knowledge/api-references/authentication
+  description: In-app browser usage is authenticated by a logged-in session cookie. Not for programmatic use.
+- id: fundzwatchBearer
+  surface: fundzwatch
+  type: http
+  scheme: bearer
+  in: header
+  name: Authorization
+  base: https://api.fundz.net/v1/watch
+  source: https://fundzwatch.ai/docs
+  in_openapi: false
+  key_prefixes:
+  - {prefix: fundz_test_, mode: test, note: 'Developer-tier limits, live data.'}
+  - {prefix: fundz_live_, mode: live, note: Paid plans.}
+  example: 'curl https://api.fundz.net/v1/watch/events -H "Authorization: Bearer YOUR_API_KEY"'
+  environment_variable: FUNDZWATCH_API_KEY
+  description: >-
+    Prefixed, mode-separated keys with a Bearer scheme — a materially more modern auth posture than
+    the core API's raw header, on the same hostname.
+access:
+  core_api:
+    free_tier: false
+    card_required: true
+    instant: false
+    statement: >-
+      "The Fundz API is available on paid plans only — there is no free API tier." Subscribe to Pro
+      or Strategic, then request the key from your account or support@fundz.net.
+    source: https://app.fundz.net/knowledge/api-references/authentication
+    correction: >-
+      CORRECTED 2026-08-14. A prior pass recorded "a free key is issued instantly, with no card and
+      no sales call" from the https://www.fundz.net/api-trial page and treated it as the core API's
+      access model. The API reference states the opposite for the core API. The free instant key is
+      real, but it is the FUNDZWATCH developer key (fundz_test_), which authorizes /v1/watch/* and
+      the MCP server — not GET /fundings. The distinction matters: the differentiator Fundz leads
+      with against Crunchbase applies to its agent surface, not to its feed API.
+  fundzwatch_api:
+    free_tier: true
+    plan: Developer (Free)
+    card_required: false
+    instant: true
+    signup: https://fundzwatch.ai/onboarding
+    alt_signup: https://www.fundz.net/api-trial
+    limits: {api_calls_per_month: 1000, ai_score_calls_per_month: 100}
+  mcp:
+    key_required: false
+    note: 7 of the 14 MCP tools return live data with no credential at all.
+failure_modes:
+- {status: 401, meaning: 'Authentication required, invalid token, or subscription inactive — the message points at fundz.net/pricing.', source: docs}
+- {status: 403, meaning: 'Missing, invalid, orphaned or non-entitled API key.', source: openapi, observed: '{"type":"Unauthorized","message":"Authentication required"}'}
+- {status: 403, meaning: 'On /fund-formations, a non-subscriber receives {"error": "subscription_required"}.', source: 'https://app.fundz.net/knowledge/api-references/fund-formations'}
+transport_security:
+  https_only: true
+  tls_version: TLSv1.3
+  hsts: false
+  note: >-
+    HSTS is NOT set on api.fundz.net or www.fundz.net — see security/fundz-domain-security.yml. For
+    an API whose only credential is a bearer-equivalent header value, that is the most consequential
+    gap in the auth posture.
 evidence:
-- url: https://fundz.net/api-trial
-  status: 200
-- url: https://app.fundz.net/knowledge/api-references/companies
-  status: 200
+- {url: 'https://app.fundz.net/knowledge/api-references/authentication', status: 200}
+- {url: 'https://app.fundz.net/knowledge/api-references/companies', status: 200}
+- {url: 'https://fundzwatch.ai/docs', status: 200}
+- {url: 'https://api.fundz.net/fundings', status: 403, note: 'live probe, no credential'}
+- {url: 'https://api.fundz.net/.well-known/oauth-authorization-server', status: 404}
+- {url: 'https://www.fundz.net/api-trial', status: 200}
+gaps:
+- Bearer/OAuth is accepted but no authorization server, token endpoint or scopes are published.
+- No key rotation, expiry or revocation policy documented.
+- No HSTS on the API host.

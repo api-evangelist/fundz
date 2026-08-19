@@ -1,0 +1,92 @@
+generated: '2026-08-14'
+method: searched
+source: https://app.fundz.net/knowledge/api-references/authentication, https://fundzwatch.ai/docs, https://www.fundz.net/terms, openapi/_original/fundz-openapi.json
+description: >-
+  Fundz publishes no versioning policy, no deprecation policy, no SLA and no status page. What it
+  does publish is a stability label on one surface and a document version in the spec. This file
+  records what exists and, explicitly, what does not — the operational-transparency surface is the
+  weakest part of the Fundz API posture.
+verified: '2026-08-14'
+versioning:
+  core_api:
+    scheme: none
+    current: null
+    example: https://api.fundz.net/fundings
+    note: >-
+      The feed and company endpoints carry no version segment, no version header and no date-based
+      version. A breaking change would arrive unannounced.
+  fundzwatch_api:
+    scheme: uri-path
+    current: v1
+    stability: STABLE
+    example: https://api.fundz.net/v1/watch/events
+    source: https://fundzwatch.ai/docs
+    note: The docs label the surface "v1 STABLE". No policy states what a v2 would mean or how long v1 would run.
+  specification:
+    document_version: 1.1.0
+    source: openapi/_original/fundz-openapi.json (info.version)
+    published_at: https://github.com/Fund-z/fundz-api-spec
+    note: >-
+      The spec is versioned in a public GitHub repository, so `git log` on Fund-z/fundz-api-spec is
+      currently the only change history a consumer has.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy page, no Sunset/Deprecation header support, and no notice period stated
+    in the Terms of Service. NO `Deprecation` pointer is emitted in apis.yml.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+  note: >-
+    No SLA. The Terms of Service (last modified 2025-09-22) cover subscription renewal, customer
+    data and IP, not availability commitments.
+status_page:
+  url: null
+  published: false
+  probes:
+  - {url: 'https://status.fundz.net', status: 000, note: 'DNS does not resolve'}
+  - {url: 'https://fundz.statuspage.io', status: 200, note: 'NOT a Fundz status page — redirects to atlassian.com/software/statuspage, the Statuspage product marketing site. A naive 200 check would credit this falsely.'}
+  - {url: 'https://www.fundz.net/security', status: 404}
+  note: >-
+    No incident communication channel of any kind. NO `StatusPage` pointer is emitted in apis.yml.
+changelog:
+  url: null
+  published: false
+  probes:
+  - {url: 'https://www.fundz.net/changelog', status: 404}
+  - {url: 'https://app.fundz.net/knowledge/changelog', status: 404}
+  note: >-
+    The knowledge base marks recently-updated articles with a "New" badge but publishes no dated
+    changelog, so no changelog/ artifact was written. The nearest thing to a change record is the
+    commit history of Fund-z/fundz-api-spec and the npm release history of @fundzwatch/mcp-server
+    (1.0.1, 1.0.2, 1.2.1, 1.2.2, 1.2.3 — latest 2026-08-03).
+support:
+  email: support@fundz.net
+  api_contact: john@fundz.net
+  knowledge_base: https://app.fundz.net/knowledge
+  source: openapi/_original/fundz-openapi.json (info.contact), https://app.fundz.net/knowledge
+terms:
+  url: https://www.fundz.net/terms
+  last_modified: '2025-09-22'
+  entity: Fundz, LLC
+privacy:
+  url: https://www.fundz.net/privacy
+  last_modified: '2025-09-01'
+licensing:
+  attribution_required: true
+  note: >-
+    Every response carries `_attribution` and `_licensing`. Commercial redistribution or embedding
+    requires a licence (john@fundz.net) — a lifecycle-adjacent constraint an integrator has to
+    honour, and one of the few contractual obligations the API states inline.
+gaps:
+- No versioning policy on the core feed API.
+- No deprecation policy and no Sunset/Deprecation header support.
+- No status page and no incident history.
+- No dated changelog.
+- No SLA or uptime target.

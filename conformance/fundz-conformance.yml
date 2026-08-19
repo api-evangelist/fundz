@@ -1,0 +1,98 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/_original/fundz-openapi.json, https://app.fundz.net/knowledge/api-references/authentication, https://www.fundz.net/privacy
+description: >-
+  Which cross-cutting standards the Fundz API actually conforms to, derived from the OpenAPI and
+  the published reference, with the negatives recorded as plainly as the positives. Fundz is a
+  plain read-only JSON REST API: it conforms to OpenAPI 3.0 and to a consistent pagination
+  convention, and to almost nothing else. No compliance certifications are published, so NO
+  `Compliance` pointer is emitted in apis.yml.
+verified: '2026-08-14'
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: 'openapi: 3.0.0 in openapi/_original/fundz-openapi.json; 6 paths, 16 component schemas, 0 dangling $refs after refinement'
+- id: api-key-auth
+  conforms: true
+  evidence: components.securitySchemes.apiKey — type apiKey, in header, name Authorization, applied globally via root security[]
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in the spec and no authorization-server metadata at
+    /.well-known/oauth-authorization-server (404 on every host). The docs say the API "also accepts
+    an OAuth access token using the Bearer scheme" for ChatGPT/agent integrations, but publish no
+    authorization endpoint, token endpoint, scopes or client registration — so the OAuth claim is
+    not independently verifiable and no scopes/ artifact was written.
+- id: oidc
+  conforms: false
+  evidence: /.well-known/openid-configuration 404 on api.fundz.net, www.fundz.net, app.fundz.net and fundzwatch.ai
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere in the spec. The spec description states the API "does not
+    currently emit RFC 9457 Problem Details". Two different vendor error envelopes are in use.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt 404 on all four hosts
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog 404 on all four hosts
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; no deprecation policy published
+- id: rfc6585-429
+  conforms: true
+  evidence: 429 declared on every operation with a documented body carrying tier, limit and upgrade_url
+- id: retry-after
+  conforms: false
+  evidence: No Retry-After header on 429 — not declared in the spec and not observed on a live response
+- id: ratelimit-headers-draft
+  conforms: false
+  evidence: >-
+    No RateLimit-* or X-RateLimit-* response headers observed on a live request to
+    https://api.fundz.net/fundings (2026-08-14). Quota is signalled in the body via
+    meta.remaining_searches and meta.tier.
+- id: pagination
+  conforms: true
+  evidence: Consistent page-number pagination across all six feed operations — page param, meta.current_page/next_page/total_count/total_pages, fixed 25-record pages
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No idempotency key. Not a defect on the published surface — all six operations are GETs, which
+    are idempotent by HTTP semantics. The FundzWatch /v1/watch/* writes document no key either.
+- id: json-api
+  conforms: false
+  evidence: Custom envelope ({_attribution, _licensing, data[], meta, upgrade_url}), not JSON:API media type or document structure
+- id: webhooks-hmac
+  conforms: true
+  evidence: >-
+    FundzWatch webhooks are signed with HMAC-SHA256 over the raw body, delivered in an
+    X-Fundz-Signature header as sha256=<hex>, with verification examples in Python and JavaScript
+    (https://fundzwatch.ai/docs)
+- id: asyncapi
+  conforms: false
+  evidence: A webhook surface is documented but no AsyncAPI document is published — see asyncapi/fundz-webhooks.yml
+- id: mcp
+  conforms: true
+  evidence: >-
+    io.github.Fund-z/fundzwatch listed on the OFFICIAL Model Context Protocol registry
+    (registry.modelcontextprotocol.io), npm @fundzwatch/mcp-server 1.2.3, stdio transport, 14 tools
+- id: a2a
+  conforms: false
+  evidence: No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host
+compliance_certifications:
+  published: false
+  certifications: []
+  note: >-
+    No trust center, no SOC 2 / ISO 27001 / PCI DSS / HIPAA / FedRAMP claim on any Fundz page.
+    probe-security-programs.py returned vdp=none trust=none, and /security and /trust both 404.
+    The privacy policy notes that BRAINTREE — the third-party payment processor — is PCI DSS
+    compliant; that is the processor's certification, not Fundz's, and it is deliberately not
+    recorded as a Fundz compliance claim.
+regulatory_context:
+  regime: Securities & Market Data
+  note: >-
+    Fundz republishes SEC EDGAR filings (Form D, 8-K, 10-K/10-Q, Form C, Form 1-A), DOL Form 5500
+    filings, state UCC registries and WARN notices. These are public-record sources; every event
+    record carries a source_url back to the filing or announcement it was extracted from, which is
+    the provenance property that matters most for this class of data.

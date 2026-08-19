@@ -1,0 +1,24 @@
+generated: '2026-08-14'
+method: generated
+source: openapi/_original/fundz-openapi.json, mcp/fundz-mcp.yml, conventions/fundz-conventions.yml, errors/fundz-problem-types.yml
+description: >-
+  Packaged Agent Skills for Fundz. Every REST step is grounded in an operationId verified present
+  in the published OpenAPI; every MCP tool name is verbatim from the provider's own README. No
+  provider-published skills or AGENTS.md exist — the Fund-z GitHub organization was checked
+  (6 repositories) and carries none — so these are generated from the repository's artifacts.
+skills:
+- file: fundz-track-funding-rounds.md
+  name: Track new funding rounds with Fundz
+  api: openapi/fundz-fundings-api-openapi.yml
+  operations: [listFundings]
+  covers: [incremental polling, pagination, quota pacing, error branching]
+- file: fundz-sweep-account-signals.md
+  name: Sweep every Fundz signal type for a target account list
+  api: openapi/fundz-fundings-api-openapi.yml
+  operations: [listFundings, listAcquisitions, listExecutiveAppointments, listAgreements, listProductLaunches, listCrowdfundings]
+  covers: [cross-feed fan-out, joining on organization.id, the two feeds that break the pattern]
+- file: fundz-agent-access-via-mcp.md
+  name: Reach Fundz data from an agent without a paid API key
+  api: mcp/fundz-mcp.yml
+  operations: [get_funded_and_hiring, get_refinancing_windows, get_stacked_borrowers, get_benefit_plans_in_play, get_money_in_motion, get_lender_directory, get_broker_directory, get_events, get_scored_leads, get_market_pulse, get_market_brief, manage_watchlist, get_watchlist_events, get_usage]
+  covers: [stdio install, key-less tools, the one write tool, when to drop to REST]

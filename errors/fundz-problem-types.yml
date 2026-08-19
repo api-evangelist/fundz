@@ -1,0 +1,105 @@
+generated: '2026-08-14'
+method: searched
+source: openapi/_original/fundz-openapi.json, https://app.fundz.net/knowledge/api-references/authentication
+description: >-
+  Error catalog for the Fundz API. Derived from the 4xx/5xx responses declared on all six
+  operations in the OpenAPI, then enriched from the published Authentication & API Keys reference,
+  which documents two statuses (400, 422) the spec does not declare. Two envelopes are in use and
+  they are NOT interchangeable — 429 has its own shape.
+verified: '2026-08-14'
+format: vendor-json
+problem_json: false
+rfc9457: false
+rfc9457_note: >-
+  The spec says so in its own words: "Both are documented below as they actually behave; the API
+  does not currently emit RFC 9457 Problem Details." No `application/problem+json` media type
+  appears anywhere in the document.
+envelopes:
+- id: standard
+  schema: '#/components/schemas/Error'
+  shape: '{ "type": "Unauthorized", "message": "Authentication required" }'
+  fields:
+  - {name: type, required: true, description: 'Error class, e.g. "Unauthorized" or "NotFound".'}
+  - {name: message, required: true, description: Human-readable explanation.}
+  used_by: [401, 403, 404, default]
+  note: >-
+    The knowledge base renders the same body with the key `error` rather than `type`
+    ({"error": "Unauthorized", "message": "..."}); the OpenAPI and the live response both use
+    `type`. Live probe 2026-08-14 returned {"type":"Unauthorized","message":"Authentication required"}.
+- id: rate-limit
+  schema: '#/components/schemas/RateLimitError'
+  shape: '{ "error": "rate_limit_exceeded", "current_tier": "Pro", "queries_limit": 50, "remaining_searches": 0, "upgrade_url": "https://www.fundz.net/pricing" }'
+  fields:
+  - {name: error, description: 'Always "rate_limit_exceeded".'}
+  - {name: current_tier, description: The plan attached to your key.}
+  - {name: queries_limit, description: Your daily request allowance.}
+  - {name: remaining_searches, description: Always 0 in this response.}
+  - {name: upgrade_url, description: Where to raise the limit.}
+  used_by: [429]
+  note: A different shape from every other error. A client that only parses `type`/`message` will fail to read a 429.
+problems:
+- status: 400
+  title: Bad or missing parameter
+  envelope: standard
+  source: https://app.fundz.net/knowledge/api-references/authentication
+  remediation: Check query parameter names and value formats (dates are YYYY-MM-DD).
+  in_openapi: false
+- status: 401
+  title: Authentication required, invalid token, or subscription inactive
+  envelope: standard
+  source: https://app.fundz.net/knowledge/api-references/authentication
+  remediation: >-
+    Send the key as the raw Authorization header value. An inactive or expired subscription also
+    returns 401, with a message pointing at fundz.net/pricing — so 401 does not always mean the
+    credential is wrong, it can mean the plan lapsed.
+  in_openapi: false
+- status: 403
+  title: Missing, invalid, orphaned or non-entitled API key
+  envelope: standard
+  observed: '{"type":"Unauthorized","message":"Authentication required"} (no key) / {"type":"Unauthorized","message":"Invalid authentication token"} (bad key)'
+  source_operation: openapi/_original/fundz-openapi.json#listFundings
+  remediation: Get or renew a key at https://www.fundz.net/api-trial or from your account on a paid plan.
+  in_openapi: true
+- status: 404
+  title: Resource not found
+  envelope: standard
+  source_operation: openapi/_original/fundz-openapi.json#listFundings
+  remediation: Check the path and, for GET /companies/:id, that the slug or numeric id resolves.
+  in_openapi: true
+- status: 422
+  title: Invalid
+  envelope: standard
+  source: https://app.fundz.net/knowledge/api-references/authentication
+  remediation: Parameter present but semantically invalid — e.g. an unrecognised series or date range.
+  in_openapi: false
+- status: 429
+  title: Daily query limit reached
+  envelope: rate-limit
+  source_operation: openapi/_original/fundz-openapi.json#listFundings
+  remediation: >-
+    Read `meta.remaining_searches` on successful responses and pace against it. No Retry-After
+    header is sent, so back off to the next quota window or upgrade at the returned upgrade_url.
+  in_openapi: true
+- status: 500
+  title: Unexpected server error
+  envelope: none
+  source_operation: openapi/_original/fundz-openapi.json#listFundings
+  note: Declared with a description but no response body schema.
+  in_openapi: true
+- status: default
+  title: Unexpected error
+  envelope: standard
+  source_operation: openapi/_original/fundz-openapi.json#listFundings
+  in_openapi: true
+applies_to_operations:
+- listFundings
+- listCrowdfundings
+- listAcquisitions
+- listExecutiveAppointments
+- listAgreements
+- listProductLaunches
+gaps:
+- No stable machine error codes — the only discriminator is the HTTP status plus a free-text `type` string.
+- No error `type` URI namespace, so errors are not individually documentable or linkable.
+- 400 and 422 are documented in the knowledge base but not declared in the OpenAPI; the spec understates the error surface.
+- The 401 the docs describe is not in the spec at all, which instead documents 403 for the same condition.

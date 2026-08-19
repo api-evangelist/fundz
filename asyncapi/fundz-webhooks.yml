@@ -1,0 +1,83 @@
+generated: '2026-08-14'
+method: searched
+source: https://fundzwatch.ai/docs
+description: >-
+  Fundz publishes no AsyncAPI document. It does document a real, signed webhook surface on the
+  FundzWatch API — HMAC-SHA256 signatures, a documented payload shape, and management endpoints to
+  create, list and test subscriptions. This file captures that catalog; the artifact type wired
+  into apis.yml is Webhooks, not AsyncAPI, because no event specification exists.
+verified: '2026-08-14'
+spec_type: null
+asyncapi_published: false
+asyncapi_note: >-
+  Probed the docs host, the Fund-z GitHub organization (6 repositories) and /asyncapi.yaml — no
+  AsyncAPI document anywhere. The webhook contract is prose plus a JSON example.
+surface: https://api.fundz.net/v1/watch/webhooks
+transport: https-post
+delivery: push
+webhooks:
+  management:
+  - {method: POST, path: /v1/watch/webhooks, description: Create a webhook subscription.}
+  - {method: GET, path: /v1/watch/webhooks, description: List webhook subscriptions.}
+  - {method: POST, path: '/v1/watch/webhooks/:webhook_id/test', description: Send a test delivery to a subscription.}
+  events:
+  - name: events.new
+    description: >-
+      Fires when one or more business events match the subscription's criteria. Batched — the
+      payload carries an `events[]` array and an `event_count`.
+    payload_fields: [event, timestamp, application_id, event_count, events]
+    example: |
+      {
+        "event": "events.new",
+        "timestamp": "2026-03-23T14:30:00Z",
+        "application_id": "app_123456",
+        "event_count": 2,
+        "events": [
+          {
+            "type": "funding",
+            "id": 57432,
+            "title": "Acme Corp raises $50M Series B",
+            "organization_id": "12345",
+            "organization_name": "Acme Corp",
+            "domain": "acme.com",
+            "amount": 50000000,
+            "series": "series_b",
+            "date": "2026-03-23T14:30:00Z"
+          }
+        ]
+      }
+  event_types:
+  - {type: funding, description: 'Venture funding rounds, seed through late stage. Includes amount, series and investors.'}
+  - {type: acquisition, description: 'M&A activity. Includes acquirer, target and deal price when available.'}
+  - {type: hiring, description: 'Executive and senior hires (VP+).'}
+  - {type: contract, description: 'Government and enterprise contracts. Includes contract value.'}
+  - {type: product_launch, description: New product and feature launches.}
+security:
+  signature_header: X-Fundz-Signature
+  algorithm: HMAC-SHA256
+  format: sha256=<hex digest>
+  signed_over: raw request body
+  secret: per-webhook secret
+  verification_examples: [python, javascript]
+  note: >-
+    Signature verification is documented with working code in both Python (hmac.compare_digest
+    against f"sha256={expected}") and JavaScript (crypto.createHmac). This is a genuinely
+    well-specified webhook security model for a provider of this size.
+quotas:
+- {plan: 'Developer (Free)', webhooks: 1}
+- {plan: 'Data Licensing', webhooks: unlimited}
+not_published:
+- retry / redelivery policy
+- delivery timeout
+- expected consumer response code
+- replay-attack protection (no timestamp tolerance window documented, though `timestamp` is in the payload)
+- event id for consumer-side deduplication of the envelope (individual events carry `id`)
+core_api_events:
+  polling_only: true
+  note: >-
+    The core Fundz API (/fundings, /acquisitions, ...) has NO push surface. Its documented
+    incremental-consumption pattern is polling `created_from` against `created_at`, newest-first.
+    The webhook surface exists only on /v1/watch/*.
+evidence:
+- {url: 'https://fundzwatch.ai/docs', status: 200}
+- {url: 'https://api.fundz.net/mcp', status: 404, note: 'no hosted MCP/SSE endpoint on the API host'}
