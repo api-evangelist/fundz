@@ -22,6 +22,16 @@ tags:
 - Business Intelligence
 - Funding
 - Private Markets
+- Mergers and Acquisitions
+- SEC Filings
+- Signals
+- Sales Intelligence
+- MCP
+- Agents
+tags_raw:
+- Business Intelligence
+- Funding
+- Private Markets
 - Mergers And Acquisitions
 - SEC Filings
 - Signals
@@ -132,6 +142,8 @@ apis:
   humanURL: https://www.fundz.net/fundz-api
   baseURL: https://api.fundz.net
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -150,6 +162,11 @@ apis:
   humanURL: https://fundzwatch.ai/docs
   baseURL: https://api.fundz.net/v1/watch
   tags:
+  - Agents
+  - Signals
+  - Webhook
+  - Sales Intelligence
+  tags_raw:
   - Agents
   - Signals
   - Webhooks
