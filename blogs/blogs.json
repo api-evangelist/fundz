@@ -1,0 +1,14 @@
+{
+  "repo": "fundz",
+  "feeds": [
+    {
+      "source": "https://www.fundz.net/blog",
+      "feed_url": "https://www.fundz.net/blog/rss.xml",
+      "title": "",
+      "saved": 7,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 7,
+  "fetched": "2026-08-22T20:20:02Z"
+}
