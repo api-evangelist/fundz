@@ -10,6 +10,19 @@ description: 'Fundz is an event-first business intelligence platform, founded 20
   on access: an API key is free and issued instantly with no card and no sales call, and pricing is published
   rather than quoted. Fundz also ships an MCP server listed on the official Model Context Protocol registry,
   and publishes an llms.txt.'
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fundz.png
 created: '2026-08-03'
 modified: '2026-08-14'
