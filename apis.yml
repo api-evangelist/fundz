@@ -23,6 +23,23 @@ deliveryModel:
   - repository-unlicensed
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: paid
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Paid
+  confidence: high
+  probe_state: covered
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-09-03'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fundz.png
 created: '2026-08-03'
 modified: '2026-08-14'
