@@ -106,6 +106,8 @@ apis:
   humanURL: https://www.fundz.net/fundz-api
   baseURL: https://api.fundz.net
   tags:
+  - Acquisition
+  tags_raw:
   - Acquisitions
   properties:
   - type: OpenAPI
