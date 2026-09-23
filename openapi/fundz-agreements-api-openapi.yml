@@ -2,25 +2,7 @@ openapi: 3.2.0
 info:
   title: Fundz Agreements API
   version: 1.1.0
-  description: 'The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.
-
-
-    **Keys are self-serve.** A working key takes about five seconds at https://www.fundz.net/api-trial — no sales call, no licence tier, no card required to start. Pricing is published at https://www.fundz.net/pricing rather than quoted, so an agent can evaluate cost before committing.
-
-
-    **Shape.** Every endpoint is a `GET` returning `{_attribution, _licensing, data[], meta}`. Pages hold 25 records; walk them with `page` and `meta.next_page`. Sort is newest-first by `created_at`, so polling `created_from` is the idiomatic way to consume the feed incrementally.
-
-
-    **Coverage.** 637 funding events in the last 7 days (113 in the last 24h) and 45,861 investors linked to rounds, verified live 2026-08-05. Organization records carry domain, LinkedIn, location, industries, headcount and public/private status.
-
-
-    **Auth.** The API key is the raw value of the `Authorization` header — there is no `Bearer` prefix.
-
-
-    **Errors.** `403` and `404` return `{type, message}`. `429` returns a different shape — `{error, current_tier, queries_limit, remaining_searches, upgrade_url}`. Both are documented below as they actually behave; the API does not currently emit RFC 9457 Problem Details.
-
-
-    **Attribution.** Every response carries `_attribution` and `_licensing`. The API is free to call on a self-serve key; commercial redistribution or embedding requires a licence (john@fundz.net).'
+  description: The Fundz API delivers structured private-market events — funding rounds, crowdfunding campaigns, acquisitions, executive appointments, business agreements and product launches — collected continuously from SEC filings, state registries and company disclosures since 2015.
   contact:
     name: Fundz API Support
     email: john@fundz.net
@@ -197,39 +179,6 @@ paths:
       operationId: listAgreements
 components:
   schemas:
-    Error:
-      type: object
-      description: Standard error body, returned for 403 and 404.
-      properties:
-        type:
-          type: string
-          description: Error class, e.g. "Unauthorized" or "NotFound".
-        message:
-          type: string
-          description: Human-readable explanation.
-      required:
-      - type
-      - message
-    RateLimitError:
-      type: object
-      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
-      properties:
-        error:
-          type: string
-          description: Always "rate_limit_exceeded".
-        current_tier:
-          type: string
-          description: The plan attached to your key.
-        queries_limit:
-          type: integer
-          description: Your daily request allowance.
-        remaining_searches:
-          type: integer
-          description: Always 0 in this response.
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise the limit.
     Agreement:
       type: object
       properties:
@@ -253,6 +202,19 @@ components:
           type: string
           description: Human-readable headline for the event.
       description: A single business agreement.
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
     AgreementPage:
       type: object
       description: A page of business agreements.
@@ -274,6 +236,26 @@ components:
           type: string
           format: uri
           description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    RateLimitError:
+      type: object
+      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
+      properties:
+        error:
+          type: string
+          description: Always "rate_limit_exceeded".
+        current_tier:
+          type: string
+          description: The plan attached to your key.
+        queries_limit:
+          type: integer
+          description: Your daily request allowance.
+        remaining_searches:
+          type: integer
+          description: Always 0 in this response.
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise the limit.
     Meta:
       type: object
       description: Pagination and quota metadata returned with every list response.

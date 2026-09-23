@@ -1,7 +1,7 @@
 {
   "provider": "fundz",
   "sources": [
-    "fundz-openapi.json"
+    "_original/fundz-openapi.json"
   ],
   "outputs": [
     "fundz-acquisitions-api-openapi.yml",
@@ -11,14 +11,20 @@
     "fundz-fundings-api-openapi.yml",
     "fundz-products-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/fundz-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "fundz-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
-    "apis.yml register: written (+6 apis, 7 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "fundz-acquisitions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fundz-agreements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fundz-crowdfundings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fundz-executives-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fundz-fundings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fundz-products-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
