@@ -197,101 +197,6 @@ paths:
       operationId: listExecutiveAppointments
 components:
   schemas:
-    ExecutiveAppointmentPage:
-      type: object
-      description: A page of executive appointments.
-      properties:
-        _attribution:
-          type: string
-          description: Required attribution string. Display or retain it when surfacing this data.
-        _licensing:
-          type: string
-          description: Licensing terms. Commercial redistribution or embedding requires a licence.
-        data:
-          type: array
-          description: The executive appointments on this page, newest first.
-          items:
-            $ref: '#/components/schemas/ExecutiveAppointment'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
-    Error:
-      type: object
-      description: Standard error body, returned for 403 and 404.
-      properties:
-        type:
-          type: string
-          description: Error class, e.g. "Unauthorized" or "NotFound".
-        message:
-          type: string
-          description: Human-readable explanation.
-      required:
-      - type
-      - message
-    ExecutiveAppointment:
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-          description: When Fundz published the event, in UTC. This is the field to poll on for new events.
-        id:
-          type: string
-          description: Stable slug identifier for this record. Safe to use as a deduplication key.
-        organization:
-          $ref: '#/components/schemas/Organization'
-        related_contacts:
-          type: array
-          items:
-            type: object
-            properties:
-              first_name:
-                type: string
-              id:
-                type: integer
-                description: Stable slug identifier for this record. Safe to use as a deduplication key.
-              photo_url:
-                type:
-                - string
-                - 'null'
-              positions:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: Stable slug identifier for this record. Safe to use as a deduplication key.
-                    title:
-                      type: string
-                      description: Human-readable headline for the event.
-        title:
-          type: string
-          description: Human-readable headline for the event.
-      description: A single executive appointment.
-    RateLimitError:
-      type: object
-      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
-      properties:
-        error:
-          type: string
-          description: Always "rate_limit_exceeded".
-        current_tier:
-          type: string
-          description: The plan attached to your key.
-        queries_limit:
-          type: integer
-          description: Your daily request allowance.
-        remaining_searches:
-          type: integer
-          description: Always 0 in this response.
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise the limit.
     Meta:
       type: object
       description: Pagination and quota metadata returned with every list response.
@@ -437,6 +342,101 @@ components:
           - 'null'
           description: Stock ticker for public companies. Null for private companies.
       description: The company the event is about. Identical shape on every endpoint.
+    ExecutiveAppointment:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: When Fundz published the event, in UTC. This is the field to poll on for new events.
+        id:
+          type: string
+          description: Stable slug identifier for this record. Safe to use as a deduplication key.
+        organization:
+          $ref: '#/components/schemas/Organization'
+        related_contacts:
+          type: array
+          items:
+            type: object
+            properties:
+              first_name:
+                type: string
+              id:
+                type: integer
+                description: Stable slug identifier for this record. Safe to use as a deduplication key.
+              photo_url:
+                type:
+                - string
+                - 'null'
+              positions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Stable slug identifier for this record. Safe to use as a deduplication key.
+                    title:
+                      type: string
+                      description: Human-readable headline for the event.
+        title:
+          type: string
+          description: Human-readable headline for the event.
+      description: A single executive appointment.
+    ExecutiveAppointmentPage:
+      type: object
+      description: A page of executive appointments.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The executive appointments on this page, newest first.
+          items:
+            $ref: '#/components/schemas/ExecutiveAppointment'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
+    RateLimitError:
+      type: object
+      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
+      properties:
+        error:
+          type: string
+          description: Always "rate_limit_exceeded".
+        current_tier:
+          type: string
+          description: The plan attached to your key.
+        queries_limit:
+          type: integer
+          description: Your daily request allowance.
+        remaining_searches:
+          type: integer
+          description: Always 0 in this response.
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise the limit.
   securitySchemes:
     apiKey:
       type: apiKey

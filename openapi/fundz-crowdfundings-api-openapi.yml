@@ -311,6 +311,51 @@ paths:
       operationId: listCrowdfundings
 components:
   schemas:
+    Meta:
+      type: object
+      description: Pagination and quota metadata returned with every list response.
+      properties:
+        current_page:
+          type: integer
+          description: The page you requested. Pages hold 25 records.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number, or null on the last page.
+        total_count:
+          type: integer
+          description: Total records matching the query across all pages.
+        total_pages:
+          type: integer
+          description: Total number of pages available.
+        tier:
+          type: string
+          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
+        remaining_searches:
+          type: integer
+          description: Requests left in your current quota window.
+    CrowdfundingPage:
+      type: object
+      description: A page of crowdfunding campaigns.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The crowdfunding campaigns on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Crowdfunding'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
     Error:
       type: object
       description: Standard error body, returned for 403 and 404.
@@ -536,51 +581,6 @@ components:
           type: string
           format: uri
           description: Where to raise the limit.
-    Meta:
-      type: object
-      description: Pagination and quota metadata returned with every list response.
-      properties:
-        current_page:
-          type: integer
-          description: The page you requested. Pages hold 25 records.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number, or null on the last page.
-        total_count:
-          type: integer
-          description: Total records matching the query across all pages.
-        total_pages:
-          type: integer
-          description: Total number of pages available.
-        tier:
-          type: string
-          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
-        remaining_searches:
-          type: integer
-          description: Requests left in your current quota window.
-    CrowdfundingPage:
-      type: object
-      description: A page of crowdfunding campaigns.
-      properties:
-        _attribution:
-          type: string
-          description: Required attribution string. Display or retain it when surfacing this data.
-        _licensing:
-          type: string
-          description: Licensing terms. Commercial redistribution or embedding requires a licence.
-        data:
-          type: array
-          description: The crowdfunding campaigns on this page, newest first.
-          items:
-            $ref: '#/components/schemas/Crowdfunding'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
   securitySchemes:
     apiKey:
       type: apiKey

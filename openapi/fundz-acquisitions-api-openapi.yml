@@ -193,19 +193,51 @@ paths:
       operationId: listAcquisitions
 components:
   schemas:
-    Error:
+    Meta:
       type: object
-      description: Standard error body, returned for 403 and 404.
+      description: Pagination and quota metadata returned with every list response.
       properties:
-        type:
+        current_page:
+          type: integer
+          description: The page you requested. Pages hold 25 records.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number, or null on the last page.
+        total_count:
+          type: integer
+          description: Total records matching the query across all pages.
+        total_pages:
+          type: integer
+          description: Total number of pages available.
+        tier:
           type: string
-          description: Error class, e.g. "Unauthorized" or "NotFound".
-        message:
+          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
+        remaining_searches:
+          type: integer
+          description: Requests left in your current quota window.
+    AcquisitionPage:
+      type: object
+      description: A page of acquisitions.
+      properties:
+        _attribution:
           type: string
-          description: Human-readable explanation.
-      required:
-      - type
-      - message
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The acquisitions on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Acquisition'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
     Acquisition:
       type: object
       properties:
@@ -345,27 +377,19 @@ components:
           type: string
           description: Human-readable headline for the event.
       description: A single acquisition.
-    AcquisitionPage:
+    Error:
       type: object
-      description: A page of acquisitions.
+      description: Standard error body, returned for 403 and 404.
       properties:
-        _attribution:
+        type:
           type: string
-          description: Required attribution string. Display or retain it when surfacing this data.
-        _licensing:
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
           type: string
-          description: Licensing terms. Commercial redistribution or embedding requires a licence.
-        data:
-          type: array
-          description: The acquisitions on this page, newest first.
-          items:
-            $ref: '#/components/schemas/Acquisition'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
     RateLimitError:
       type: object
       description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
@@ -386,30 +410,6 @@ components:
           type: string
           format: uri
           description: Where to raise the limit.
-    Meta:
-      type: object
-      description: Pagination and quota metadata returned with every list response.
-      properties:
-        current_page:
-          type: integer
-          description: The page you requested. Pages hold 25 records.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number, or null on the last page.
-        total_count:
-          type: integer
-          description: Total records matching the query across all pages.
-        total_pages:
-          type: integer
-          description: Total number of pages available.
-        tier:
-          type: string
-          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
-        remaining_searches:
-          type: integer
-          description: Requests left in your current quota window.
   securitySchemes:
     apiKey:
       type: apiKey
