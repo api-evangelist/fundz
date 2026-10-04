@@ -221,6 +221,9 @@ apis:
   - url: sandbox/fundz-sandbox.yml
     type: Sandbox
 common:
+- type: CapabilityMap
+  url: capabilities/fundz-capability-edges.yml
+  name: Fundz Business Capability Map
 - type: DomainSecurity
   url: security/fundz-domain-security.yml
 - url: https://www.fundz.net/
