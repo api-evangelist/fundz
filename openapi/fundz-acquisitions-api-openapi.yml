@@ -193,19 +193,6 @@ paths:
       operationId: listAcquisitions
 components:
   schemas:
-    Error:
-      type: object
-      description: Standard error body, returned for 403 and 404.
-      properties:
-        type:
-          type: string
-          description: Error class, e.g. "Unauthorized" or "NotFound".
-        message:
-          type: string
-          description: Human-readable explanation.
-      required:
-      - type
-      - message
     RateLimitError:
       type: object
       description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
@@ -250,6 +237,40 @@ components:
         remaining_searches:
           type: integer
           description: Requests left in your current quota window.
+    AcquisitionPage:
+      type: object
+      description: A page of acquisitions.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The acquisitions on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Acquisition'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
     Acquisition:
       type: object
       properties:
@@ -389,27 +410,6 @@ components:
           type: string
           description: Human-readable headline for the event.
       description: A single acquisition.
-    AcquisitionPage:
-      type: object
-      description: A page of acquisitions.
-      properties:
-        _attribution:
-          type: string
-          description: Required attribution string. Display or retain it when surfacing this data.
-        _licensing:
-          type: string
-          description: Licensing terms. Commercial redistribution or embedding requires a licence.
-        data:
-          type: array
-          description: The acquisitions on this page, newest first.
-          items:
-            $ref: '#/components/schemas/Acquisition'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
   securitySchemes:
     apiKey:
       type: apiKey

@@ -311,6 +311,84 @@ paths:
       operationId: listCrowdfundings
 components:
   schemas:
+    RateLimitError:
+      type: object
+      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
+      properties:
+        error:
+          type: string
+          description: Always "rate_limit_exceeded".
+        current_tier:
+          type: string
+          description: The plan attached to your key.
+        queries_limit:
+          type: integer
+          description: Your daily request allowance.
+        remaining_searches:
+          type: integer
+          description: Always 0 in this response.
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise the limit.
+    Meta:
+      type: object
+      description: Pagination and quota metadata returned with every list response.
+      properties:
+        current_page:
+          type: integer
+          description: The page you requested. Pages hold 25 records.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number, or null on the last page.
+        total_count:
+          type: integer
+          description: Total records matching the query across all pages.
+        total_pages:
+          type: integer
+          description: Total number of pages available.
+        tier:
+          type: string
+          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
+        remaining_searches:
+          type: integer
+          description: Requests left in your current quota window.
+    CrowdfundingPage:
+      type: object
+      description: A page of crowdfunding campaigns.
+      properties:
+        _attribution:
+          type: string
+          description: Required attribution string. Display or retain it when surfacing this data.
+        _licensing:
+          type: string
+          description: Licensing terms. Commercial redistribution or embedding requires a licence.
+        data:
+          type: array
+          description: The crowdfunding campaigns on this page, newest first.
+          items:
+            $ref: '#/components/schemas/Crowdfunding'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        upgrade_url:
+          type: string
+          format: uri
+          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
+    Error:
+      type: object
+      description: Standard error body, returned for 403 and 404.
+      properties:
+        type:
+          type: string
+          description: Error class, e.g. "Unauthorized" or "NotFound".
+        message:
+          type: string
+          description: Human-readable explanation.
+      required:
+      - type
+      - message
     Crowdfunding:
       type: object
       properties:
@@ -503,84 +581,6 @@ components:
         zip_code:
           type: string
       description: A single crowdfunding campaign.
-    Error:
-      type: object
-      description: Standard error body, returned for 403 and 404.
-      properties:
-        type:
-          type: string
-          description: Error class, e.g. "Unauthorized" or "NotFound".
-        message:
-          type: string
-          description: Human-readable explanation.
-      required:
-      - type
-      - message
-    RateLimitError:
-      type: object
-      description: Returned with HTTP 429 when the daily request quota for your tier is exhausted. Note this body has a different shape from the other error responses.
-      properties:
-        error:
-          type: string
-          description: Always "rate_limit_exceeded".
-        current_tier:
-          type: string
-          description: The plan attached to your key.
-        queries_limit:
-          type: integer
-          description: Your daily request allowance.
-        remaining_searches:
-          type: integer
-          description: Always 0 in this response.
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise the limit.
-    Meta:
-      type: object
-      description: Pagination and quota metadata returned with every list response.
-      properties:
-        current_page:
-          type: integer
-          description: The page you requested. Pages hold 25 records.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number, or null on the last page.
-        total_count:
-          type: integer
-          description: Total records matching the query across all pages.
-        total_pages:
-          type: integer
-          description: Total number of pages available.
-        tier:
-          type: string
-          description: The plan attached to your API key, e.g. "Starter", "Pro", "Strategic".
-        remaining_searches:
-          type: integer
-          description: Requests left in your current quota window.
-    CrowdfundingPage:
-      type: object
-      description: A page of crowdfunding campaigns.
-      properties:
-        _attribution:
-          type: string
-          description: Required attribution string. Display or retain it when surfacing this data.
-        _licensing:
-          type: string
-          description: Licensing terms. Commercial redistribution or embedding requires a licence.
-        data:
-          type: array
-          description: The crowdfunding campaigns on this page, newest first.
-          items:
-            $ref: '#/components/schemas/Crowdfunding'
-        meta:
-          $ref: '#/components/schemas/Meta'
-        upgrade_url:
-          type: string
-          format: uri
-          description: Where to raise your plan quota. Returned at the top level of the envelope, not inside meta.
   securitySchemes:
     apiKey:
       type: apiKey
