@@ -1,0 +1,32 @@
+# Front Door AI Index — fundz — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: fundz
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: www.fundz.net
+  final_host: www.fundz.net
+  ownership: own
+  owner: fundz
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 21
+  band: 5
+  band_label: prominent
+  host_score: 21
+  density: 6.51
+  words: 3226
+  tiers:
+    agentic: 0
+    core: 19
+    model: 2
+  ambiguous: 16
+  top_terms:
+    AI: 18
+    intelligence: 14
+    Claude: 2
+    predictive: 2
+    ML: 1
