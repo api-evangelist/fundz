@@ -1,4 +1,4 @@
-# Fundz (fundz)
+# Fundz
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,186 +66,147 @@
 
 Fundz is an event-first business intelligence platform, founded 2015, tracking 200,000+ companies and surfacing funding rounds, executive changes, M&A activity, SEC filings (8-K, 10-K, 10-Q, Form D) and website modifications in real time. Rather than storing millions of static records it focuses on companies showing active signals, and scores them against each user's criteria. The API exposes company profiles, fundings, SEC filings and fund formations from api.fundz.net with an API key in the Authorization header. It sits in the same category as Harmonic and Crunchbase, and competes explicitly on access: an API key is free and issued instantly with no card and no sales call, and pricing is published rather than quoted. Fundz also ships an MCP server listed on the official Model Context Protocol registry, and publishes an llms.txt.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/fundz/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/fundz/refs/heads/main/apis.yml)
+**Areas:** Business Intelligence · Funding · Private Markets · Mergers and Acquisitions · SEC Filings · Signals · Sales Intelligence · MCP · Agents
 
-## Scope
+## Fundz on APIs.io
 
-- **Type:** Index
-- **Position:** Producing
-- **Access:** 3rd-Party
+Everything profiled for Fundz is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fundz/](https://apis.io/providers/fundz/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Business Intelligence
-- Funding
-- Private Markets
-- Mergers And Acquisitions
-- SEC Filings
-- Signals
-- Sales Intelligence
-- MCP
-- Agents
+- [Fundz API](https://apis.io/apis/fundz/fundz-api/) — Company profiles, funding rounds, SEC filings and fund formations, keyed to real-time business events.
+- [Fundz Acquisitions API](https://apis.io/apis/fundz/fundz-acquisitions-api/) — Company acquisitions and M&A events, with acquirer and target organization records where disclosed.
+- [Fundz Agreements API](https://apis.io/apis/fundz/fundz-agreements-api/) — Business agreements and partnerships announced by companies — distribution, licensing, joint ventures and similar.
+- [Fundz Crowdfundings API](https://apis.io/apis/fundz/fundz-crowdfundings-api/) — Regulation CF and Regulation A crowdfunding campaigns, sourced from SEC Form C and Form 1-A filings.
+- [Fundz Executives API](https://apis.io/apis/fundz/fundz-executives-api/) — Executive hires and appointments — new C-level, VP and board appointments at private and public companies.
+- [Fundz Fundings API](https://apis.io/apis/fundz/fundz-fundings-api/) — Funding rounds — seed through late-stage venture and private equity — with the investors on the round and the full organization record.
+- [Fundz Products API](https://apis.io/apis/fundz/fundz-products-api/) — Product launches and major product announcements.
+- [FundzWatch API](https://apis.io/apis/fundz/fundzwatch-api/) — The agent-facing Fundz surface, served on the same host under /v1/watch/*: AI-scored leads matched to an ICP, a raw business-event feed, a company…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-08-03
-- **Modified:** 2026-08-03
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Fundz API
+Event-driven and webhook contracts.
 
-Company profiles, funding rounds, SEC filings and fund formations, keyed to real-time business events.
+- [Fundz Webhooks](https://apis.io/asyncapis/fundz/fundz-webhooks/)
 
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
+#### MCP servers (1)
 
-#### Tags
+Model Context Protocol servers that expose the API to agents.
 
-- Funding
-- Companies
-- SEC Filings
-- Fund Formations
-- Signals
+- [io.github.Fund-z/fundzwatch](https://apis.io/servers/fundz/io-github-fund-z-fundzwatch/)
 
-#### Properties
+#### Collections (6)
 
-- [Documentation](https://www.fundz.net/fundz-api)
-- [API Reference](https://app.fundz.net/knowledge/api-references/companies)
-- [Signup](https://fundz.net/api-trial)
-- [Pricing](https://fundz.net/pricing)
-- [Authentication](authentication/fundz-authentication.yml)
-- [Plans](plans/fundz-plans.yml)
-- [M C P Server](mcp/fundz-mcp.yml)
-- [Llms Text](https://app.fundz.net/llms.txt)
-- [Postman Collection](collections/fundz-acquisitions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-acquisitions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fundz-agreements-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-agreements-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fundz-crowdfundings-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-crowdfundings-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fundz-executives-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-executives-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fundz-fundings-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-fundings-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/fundz-products-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-products-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-### Fundz Acquisitions API
+- [Fundz Acquisitions API](https://apis.io/collections/fundz/open-fundz-acquisitions-api/)
+- [Fundz Agreements API](https://apis.io/collections/fundz/open-fundz-agreements-api/)
+- [Fundz Crowdfundings API](https://apis.io/collections/fundz/open-fundz-crowdfundings-api/)
+- [Fundz Executives API](https://apis.io/collections/fundz/open-fundz-executives-api/)
+- [Fundz Fundings API](https://apis.io/collections/fundz/open-fundz-fundings-api/)
+- [Fundz Products API](https://apis.io/collections/fundz/open-fundz-products-api/)
 
-Company acquisitions and M&A events, with acquirer and target organization records where disclosed.
+#### Overlays (6)
 
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Tags
+- [Fundz Acquisitions Api Overlay](https://apis.io/overlays/fundz/fundz-acquisitions-api-overlay/)
+- [Fundz Agreements Api Overlay](https://apis.io/overlays/fundz/fundz-agreements-api-overlay/)
+- [Fundz Crowdfundings Api Overlay](https://apis.io/overlays/fundz/fundz-crowdfundings-api-overlay/)
+- [Fundz Executives Api Overlay](https://apis.io/overlays/fundz/fundz-executives-api-overlay/)
+- [Fundz Fundings Api Overlay](https://apis.io/overlays/fundz/fundz-fundings-api-overlay/)
+- [Fundz Products Api Overlay](https://apis.io/overlays/fundz/fundz-products-api-overlay/)
 
-- Acquisitions
+#### Security (2)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [OpenAPI](openapi/fundz-acquisitions-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-acquisitions-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-acquisitions-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Fundz Authentication](https://apis.io/security/fundz/fundz-authentication/)
+- [Fundz Domain Security](https://apis.io/security/fundz/fundz-domain-security/)
 
-### Fundz Agreements API
+#### Plans and pricing (2)
 
-Business agreements and partnerships announced by companies — distribution, licensing, joint ventures and similar.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
+- [Fundz Plans](https://apis.io/plans/fundz/fundz-plans/)
+- [Fundz Plans Pricing](https://apis.io/plans/fundz/fundz-plans-pricing/)
 
-#### Tags
+#### Rate limits (1)
 
-- Agreements
+Published request limits.
 
-#### Properties
+- [Fundz Rate Limits](https://apis.io/rate-limits/fundz/fundz-rate-limits/)
 
-- [OpenAPI](openapi/fundz-agreements-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-agreements-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-agreements-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+## Where to find this API
 
-### Fundz Crowdfundings API
-
-Regulation CF and Regulation A crowdfunding campaigns, sourced from SEC Form C and Form 1-A filings.
-
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
-
-#### Tags
-
-- Crowdfundings
-
-#### Properties
-
-- [OpenAPI](openapi/fundz-crowdfundings-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-crowdfundings-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-crowdfundings-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Fundz Executives API
-
-Executive hires and appointments — new C-level, VP and board appointments at private and public companies.
-
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
-
-#### Tags
-
-- Executives
-
-#### Properties
-
-- [OpenAPI](openapi/fundz-executives-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-executives-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-executives-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Fundz Fundings API
-
-Funding rounds — seed through late-stage venture and private equity — with the investors on the round and the full organization record.
-
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
-
-#### Tags
-
-- Fundings
-
-#### Properties
-
-- [OpenAPI](openapi/fundz-fundings-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-fundings-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-fundings-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Fundz Products API
-
-Product launches and major product announcements.
-
-- **Human URL:** [https://www.fundz.net/fundz-api](https://www.fundz.net/fundz-api)
-- **Base URL:** `https://api.fundz.net`
-
-#### Tags
-
-- Products
-
-#### Properties
-
-- [OpenAPI](openapi/fundz-products-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/fundz-products-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/fundz-products-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.fundz.net/)
 - [Documentation](https://www.fundz.net/fundz-api)
+- [Getting started](https://app.fundz.net/knowledge/api-references/authentication)
+- [API reference](https://app.fundz.net/knowledge/api-references)
 - [Pricing](https://fundz.net/pricing)
-- [Signup](https://fundz.net/api-trial)
-- [Llms Text](https://app.fundz.net/llms.txt)
-- [M C P Server](mcp/fundz-mcp.yml)
-- [Plans](plans/fundz-plans.yml)
-- [Authentication](authentication/fundz-authentication.yml)
-- [GitHub Repository](https://github.com/Fund-z/fundzwatch-mcp)
+- [Support](https://www.fundz.net/contact)
+- [Blog](https://www.fundz.net/blog)
+- [Terms of service](https://www.fundz.net/terms)
+- [Privacy policy](https://www.fundz.net/privacy)
+- [GitHub](https://github.com/Fund-z)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 60.2** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 61.8 |
+| Contract governance | 4.5 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 76.3 |
+
+**Agent readiness 41.8** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 28.7** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fundz/](https://apis.io/providers/fundz/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Fundz: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fundz/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
